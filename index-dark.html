@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Weeds — Celtic Folk Trio from Carmel, California</title>
+  <meta name="description" content="The Weeds are a Celtic folk trio from Carmel, California — fiddle, harp, and mandolin. Debut album Supernatural out now.">
+  <meta property="og:title" content="The Weeds — Celtic Folk Trio">
+  <meta property="og:description" content="Fiddle, harp, and mandolin. Traditional Irish melodies and original compositions. Debut album Supernatural out now.">
+  <meta property="og:image" content="assets/images/band-photo.jpg">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base:    '#080d09',
+            surface: '#0e150e',
+            raised:  '#131b13',
+            gold:    '#b8822a',
+            'gold-lt': '#d4a44a',
+            sage:    '#5a9463',
+            parch:   '#e4e0d7',
+            muted:   '#888680',
+            faint:   'rgba(255,255,255,0.05)',
+          },
+          fontFamily: {
+            heading: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body:    ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 68px; }
+    body { -webkit-font-smoothing: antialiased; background: #080d09; }
+
+    /* Nav */
+    #main-nav {
+      transition: background 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    #main-nav.scrolled {
+      background: rgba(8,13,9,0.96);
+      backdrop-filter: blur(12px);
+      border-color: rgba(255,255,255,0.07);
+    }
+
+    /* Hero */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      background-image: url('assets/images/band-photo.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      display: flex;
+      align-items: flex-end;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(8,13,9,0.82) 0%,
+        rgba(8,13,9,0.45) 45%,
+        rgba(8,13,9,0.78) 75%,
+        rgba(8,13,9,0.97) 100%
+      );
+    }
+    #hero > * { position: relative; z-index: 1; }
+
+    /* Grain overlay for cinematic feel */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Buttons */
+    .btn-gold {
+      display: inline-block;
+      background: #b8822a;
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 2px;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.18s ease;
+      white-space: nowrap;
+    }
+    .btn-gold:hover { background: #9a6b22; }
+    .btn-gold:focus-visible { outline: 2px solid #b8822a; outline-offset: 3px; }
+
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      color: rgba(228,224,215,0.65);
+      border: 1px solid rgba(228,224,215,0.2);
+      padding: 12px 28px;
+      border-radius: 2px;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.18s ease, color 0.18s ease;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover { border-color: rgba(228,224,215,0.5); color: #e4e0d7; }
+    .btn-ghost:focus-visible { outline: 2px solid rgba(228,224,215,0.4); outline-offset: 3px; }
+
+    /* Track rows */
+    .track-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.15s ease;
+    }
+    .track-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .track-row:hover { background: rgba(255,255,255,0.03); }
+
+    /* Member rows */
+    .member-row {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 1.75rem 0;
+    }
+    .member-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+
+    /* Divider line */
+    .section-rule { border-color: rgba(255,255,255,0.07); }
+
+    /* Mobile menu */
+    #mobile-menu.open { opacity: 1; pointer-events: auto; }
+
+    /* Bandcamp player dark override */
+    .bc-wrap iframe { filter: invert(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1 !important; transform: none !important; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body class="font-body text-parch">
+
+  <!-- Skip nav -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-base focus:text-parch focus:px-4 focus:py-2 focus:rounded focus:text-sm">Skip to main content</a>
+
+  <!-- Navigation -->
+  <nav id="main-nav" aria-label="Main navigation" class="fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-[1100px] mx-auto flex justify-between items-center h-[68px] px-6">
+      <a href="#" class="font-body text-[10px] tracking-[4px] uppercase text-parch/60 hover:text-parch/90 transition-colors font-medium">
+        The Weeds
+      </a>
+      <div class="hidden md:flex items-center gap-10">
+        <a href="#music"   class="text-[11px] tracking-[2px] uppercase text-parch/50 hover:text-parch/90 transition-colors">Music</a>
+        <a href="#about"   class="text-[11px] tracking-[2px] uppercase text-parch/50 hover:text-parch/90 transition-colors">About</a>
+        <a href="#contact" class="text-[11px] tracking-[2px] uppercase text-parch/50 hover:text-parch/90 transition-colors">Contact</a>
+        <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-gold ml-2">Bandcamp</a>
+      </div>
+      <button id="menu-toggle" class="md:hidden p-2 -mr-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true">
+          <rect width="22" height="1.5" rx="0.75" fill="rgba(228,224,215,0.6)"/>
+          <rect y="6.25" width="22" height="1.5" rx="0.75" fill="rgba(228,224,215,0.6)"/>
+          <rect y="12.5" width="22" height="1.5" rx="0.75" fill="rgba(228,224,215,0.6)"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" class="fixed inset-0 z-40 bg-base flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true">
+    <button id="menu-close" class="absolute top-5 right-6 text-parch/30 hover:text-parch/70 text-3xl leading-none" aria-label="Close menu">&times;</button>
+    <a href="#music"   class="mobile-nav-link font-heading italic text-3xl text-parch/70 hover:text-parch transition-colors">Music</a>
+    <a href="#about"   class="mobile-nav-link font-heading italic text-3xl text-parch/70 hover:text-parch transition-colors">About</a>
+    <a href="#contact" class="mobile-nav-link font-heading italic text-3xl text-parch/70 hover:text-parch transition-colors">Contact</a>
+    <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="mobile-nav-link mt-2 btn-gold">Listen on Bandcamp</a>
+  </div>
+
+  <main id="main-content">
+
+  <!-- Hero -->
+  <section id="hero" aria-label="Hero">
+    <h1 class="sr-only">The Weeds</h1>
+    <div class="max-w-[1100px] mx-auto px-6 pb-20 md:pb-28 w-full">
+      <div class="max-w-lg">
+        <p class="hero-eyebrow text-[10px] tracking-[4px] uppercase text-parch/40 mb-8 font-light">Carmel, California &nbsp;&middot;&nbsp; Celtic Folk</p>
+        <p class="hero-tagline font-heading italic text-parch leading-[1.15] text-[38px] md:text-[52px] mb-8" style="text-shadow: 0 2px 24px rgba(0,0,0,0.5);">
+          Fiddle, harp,<br>and mandolin.
+        </p>
+        <p class="hero-sub text-sm leading-relaxed mb-10 font-light" style="color:rgba(228,224,215,0.55); max-width: 380px;">
+          Traditional Irish melodies woven with original compositions. Debut album <em>Supernatural</em> — out now.
+        </p>
+        <div class="hero-ctas flex flex-wrap gap-4">
+          <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-gold">Listen to Supernatural</a>
+          <a href="#about" class="btn-ghost">Our Story</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thin gold rule between hero and music -->
+  <div class="h-px w-full" style="background: linear-gradient(to right, transparent, rgba(184,130,42,0.3), transparent);"></div>
+
+  <!-- Music -->
+  <section id="music" class="bg-surface py-20 md:py-28">
+    <div class="max-w-[1100px] mx-auto px-6">
+      <div class="flex flex-col lg:flex-row gap-14 lg:gap-20 items-start">
+
+        <!-- Left -->
+        <div class="flex-1 min-w-0">
+          <p class="reveal text-[10px] tracking-[4px] uppercase text-sage mb-5 font-light">Debut Album</p>
+          <h2 class="reveal font-heading italic text-parch text-5xl md:text-6xl mb-4">Supernatural</h2>
+          <p class="reveal text-[11px] tracking-[2px] uppercase text-muted mb-8 font-light">
+            Released March 13, 2026 &nbsp;&middot;&nbsp; 10 Tracks
+          </p>
+          <p class="reveal text-sm leading-relaxed mb-10 text-parch/60 max-w-md font-light">
+            Gathered from countless hours of playing, composing, long nights at fiddle camps, and years of performing together — the trio's favorite tune sets and original compositions, recorded at home in summer 2025. Mixed and mastered by Jürgen Treyz.
+          </p>
+          <div class="reveal mb-8">
+            <iframe
+              title="Supernatural by The Weeds on Bandcamp"
+              style="border:0; width:100%; height:120px;"
+              src="https://bandcamp.com/EmbeddedPlayer/album=3592323366/size=small/bgcol=0e150e/linkcol=b8822a/transparent=true/"
+              seamless
+              loading="lazy">
+              <a href="https://weedstrio.bandcamp.com/album/supernatural">Supernatural by The Weeds</a>
+            </iframe>
+          </div>
+          <div class="reveal">
+            <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-gold">Buy or Stream on Bandcamp</a>
+          </div>
+        </div>
+
+        <!-- Right: track listing -->
+        <div class="lg:w-64 shrink-0">
+          <p class="reveal text-[10px] tracking-[4px] uppercase text-muted mb-5 font-light">Track Listing</p>
+          <div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">1</span><span class="text-parch/80 text-sm flex-1">Supernatural</span><span class="text-muted text-xs font-light">3:23</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">2</span><span class="text-parch/80 text-sm flex-1">Old Favorite</span><span class="text-muted text-xs font-light">4:48</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">3</span><span class="text-parch/80 text-sm flex-1">Take Seven</span><span class="text-muted text-xs font-light">4:59</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">4</span><span class="text-parch/80 text-sm flex-1">Bold Doherty</span><span class="text-muted text-xs font-light">4:39</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">5</span><span class="text-parch/80 text-sm flex-1">Robert Jordan</span><span class="text-muted text-xs font-light">3:53</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">6</span><span class="text-parch/80 text-sm flex-1">Curlew</span><span class="text-muted text-xs font-light">4:08</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">7</span><span class="text-parch/80 text-sm flex-1">Storm King</span><span class="text-muted text-xs font-light">5:03</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">8</span><span class="text-parch/80 text-sm flex-1">Sí Bheag, Sí Mhór</span><span class="text-muted text-xs font-light">3:46</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">9</span><span class="text-parch/80 text-sm flex-1">Castle Kelly</span><span class="text-muted text-xs font-light">4:54</span></div>
+            <div class="track-row reveal"><span class="text-muted text-xs w-5 shrink-0 font-light">10</span><span class="text-parch/80 text-sm flex-1">Memory of Michael Coleman</span><span class="text-muted text-xs font-light">6:27</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="bg-base border-t section-rule py-20 md:py-28">
+    <div class="max-w-[1100px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row gap-16 md:gap-20">
+
+        <!-- Left -->
+        <div class="md:w-5/12">
+          <p class="reveal text-[10px] tracking-[4px] uppercase text-sage mb-5 font-light">The Band</p>
+          <h2 class="reveal font-heading italic text-parch text-3xl md:text-4xl leading-[1.2] mb-7">
+            A family trio rooted in tradition.
+          </h2>
+          <p class="reveal text-sm leading-relaxed mb-5 text-parch/55 font-light">
+            The Weeds are John, Tyler, and Evan Weed — a father and two sons from Carmel, California. They grew up traveling together to folk festivals and sessions across the West Coast, building a shared musical language across fiddle, harp, mandolin, guitar, tenor banjo, piano, and melodica.
+          </p>
+          <p class="reveal text-sm leading-relaxed text-parch/55 font-light">
+            Their music moves between traditional Irish tunes and original compositions, always with the same ease — as if there is no line between the two.
+          </p>
+        </div>
+
+        <!-- Right: members -->
+        <div class="md:w-7/12 self-start">
+          <div class="member-row reveal">
+            <div class="flex items-baseline justify-between mb-2">
+              <h3 class="font-heading text-parch text-2xl">John Weed</h3>
+              <span class="text-[10px] tracking-[3px] uppercase text-sage font-light">Fiddle</span>
+            </div>
+            <p class="text-sm leading-relaxed text-parch/50 font-light">The anchor of the trio. John's fiddle carries the Irish tradition with warmth and authority. He plays a violin by James Wimmer.</p>
+          </div>
+          <div class="member-row reveal">
+            <div class="flex items-baseline justify-between mb-2">
+              <h3 class="font-heading text-parch text-2xl">Evan Weed</h3>
+              <span class="text-[10px] tracking-[3px] uppercase text-sage font-light">Harp &middot; Piano &middot; Melodica</span>
+            </div>
+            <p class="text-sm leading-relaxed text-parch/50 font-light">Evan's harp gives the trio its distinctive voice — resonant, unexpected, and grounding. He moves fluidly between harp, piano, and melodica.</p>
+          </div>
+          <div class="member-row reveal">
+            <div class="flex items-baseline justify-between mb-2">
+              <h3 class="font-heading text-parch text-2xl">Tyler Weed</h3>
+              <span class="text-[10px] tracking-[3px] uppercase text-sage font-light">Mandolin &middot; Guitar &middot; Banjo</span>
+            </div>
+            <p class="text-sm leading-relaxed text-parch/50 font-light">Tyler drives the rhythm and melody in equal measure, moving across mandolin, guitar, and tenor banjo as the music demands.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="bg-raised border-t section-rule py-20 md:py-24">
+    <div class="max-w-[1100px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row gap-14 md:gap-20 md:items-end">
+
+        <div class="md:w-1/2">
+          <p class="reveal text-[10px] tracking-[4px] uppercase text-sage mb-5 font-light">Get in Touch</p>
+          <h2 class="reveal font-heading italic text-parch text-3xl md:text-4xl mb-5 leading-[1.2]">Bookings &amp; inquiries.</h2>
+          <p class="reveal text-sm leading-relaxed text-parch/50 mb-8 font-light max-w-sm">
+            Interested in having The Weeds perform? Reach out and they will get back to you.
+          </p>
+          <div class="reveal flex flex-col gap-3">
+            <a href="mailto:info@weedstrio.com" class="btn-gold self-start">Email the Band</a>
+            <p class="text-xs text-parch/30 font-light">info@weedstrio.com</p>
+          </div>
+        </div>
+
+        <div class="md:w-1/2">
+          <p class="reveal text-[10px] tracking-[4px] uppercase text-sage mb-6 font-light">Follow Along</p>
+          <div class="reveal flex flex-col gap-5">
+            <a href="https://www.instagram.com/weedstrio" target="_blank" rel="noopener"
+               class="flex items-center gap-4 group text-parch/40 hover:text-parch/70 transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
+              <span class="text-sm font-light tracking-wide">@weedstrio</span>
+            </a>
+            <a href="https://weedstrio.bandcamp.com" target="_blank" rel="noopener"
+               class="flex items-center gap-4 group text-parch/40 hover:text-parch/70 transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
+              </svg>
+              <span class="text-sm font-light tracking-wide">weedstrio.bandcamp.com</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-base border-t section-rule py-7">
+    <div class="max-w-[1100px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3">
+      <span class="font-heading italic text-parch/30 text-sm">The Weeds</span>
+      <span class="text-[10px] tracking-[2px] uppercase text-parch/20 font-light">&copy; 2026 &nbsp;&middot;&nbsp; Carmel, California</span>
+      <a href="https://weedstrio.bandcamp.com" target="_blank" rel="noopener" class="text-[10px] tracking-[2px] uppercase text-parch/20 hover:text-parch/40 transition-colors font-light">Bandcamp</a>
+    </div>
+  </footer>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Nav on scroll
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Hero entrance
+    if (!noMotion) {
+      gsap.set(['.hero-eyebrow', '.hero-tagline', '.hero-sub', '.hero-ctas'], { opacity: 0, y: 20 });
+      gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 })
+        .to('.hero-eyebrow',  { opacity: 1, y: 0, duration: 0.6 }, 0)
+        .to('.hero-tagline',  { opacity: 1, y: 0, duration: 0.8 }, 0.15)
+        .to('.hero-sub',      { opacity: 1, y: 0, duration: 0.6 }, 0.45)
+        .to('.hero-ctas',     { opacity: 1, y: 0, duration: 0.55 }, 0.65);
+    }
+
+    // Scroll reveals
+    if (!noMotion) {
+      gsap.set('.reveal', { opacity: 0, y: 16 });
+      ScrollTrigger.batch('.reveal', {
+        start: 'top 91%',
+        onEnter:     batch => gsap.to(batch, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07, ease: 'power2.out' }),
+        onLeaveBack: batch => gsap.to(batch, { opacity: 0, y: 10, duration: 0.25 }),
+      });
+    }
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuClose  = document.getElementById('menu-close');
+
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      menuToggle.setAttribute('aria-label', 'Close menu');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuClose.focus();
+    }
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      menuToggle.setAttribute('aria-label', 'Open menu');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.focus();
+    }
+
+    menuToggle.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    document.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', closeMenu));
+    mobileMenu.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  </script>
+</body>
+</html>
