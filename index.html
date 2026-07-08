@@ -196,6 +196,7 @@
       <div class="hidden md:flex items-center gap-8">
         <a href="#music"   class="text-sm text-white/80 hover:text-white transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Music</a>
         <a href="#about"   class="text-sm text-white/80 hover:text-white transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">About</a>
+        <a href="#shows"   class="text-sm text-white/80 hover:text-white transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Shows</a>
         <a href="#contact" class="text-sm text-white/80 hover:text-white transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Contact</a>
         <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-primary ml-2">Listen on Bandcamp</a>
       </div>
@@ -214,6 +215,7 @@
     <button id="menu-close" class="absolute top-5 right-6 text-white/40 hover:text-white text-3xl leading-none" aria-label="Close menu">&times;</button>
     <a href="#music"   class="mobile-nav-link font-heading text-2xl text-white/80 hover:text-white transition-colors italic">Music</a>
     <a href="#about"   class="mobile-nav-link font-heading text-2xl text-white/80 hover:text-white transition-colors italic">About</a>
+    <a href="#shows"   class="mobile-nav-link font-heading text-2xl text-white/80 hover:text-white transition-colors italic">Shows</a>
     <a href="#contact" class="mobile-nav-link font-heading text-2xl text-white/80 hover:text-white transition-colors italic">Contact</a>
     <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="mobile-nav-link mt-2 btn-primary">Listen on Bandcamp</a>
   </div>
@@ -383,6 +385,33 @@
     </div>
   </section>
 
+  <!-- Shows -->
+  <section id="shows" class="bg-parch py-20 md:py-28 border-b border-rule">
+    <div class="max-w-[1100px] mx-auto px-6">
+
+      <!-- Section header -->
+      <div class="max-w-2xl mb-16">
+        <p class="reveal text-fern text-[11px] tracking-[3px] uppercase font-body mb-5">Shows</p>
+        <h2 class="reveal font-heading text-ink text-3xl md:text-4xl leading-[1.2] mb-6">
+          Catch them live.
+        </h2>
+      </div>
+
+      <!-- Upcoming shows -->
+      <div class="mb-16">
+        <p class="reveal text-[11px] tracking-[3px] uppercase font-body text-stone mb-4">Upcoming</p>
+        <div id="upcoming-shows-list"></div>
+      </div>
+
+      <!-- Previous engagements -->
+      <div id="past-shows-wrap" class="hidden">
+        <p class="reveal text-[11px] tracking-[3px] uppercase font-body text-stone mb-4">Previous Engagements</p>
+        <div id="past-shows-list"></div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Contact / Connect -->
   <section id="contact" class="bg-grove py-20 md:py-28">
     <div class="max-w-[1100px] mx-auto px-6">
@@ -507,6 +536,106 @@
     menuClose.addEventListener('click', closeMenu);
     document.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', closeMenu));
     mobileMenu.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+    // Shows: fetch gig list from Google Sheets and render Upcoming / Previous Engagements
+    async function loadShows() {
+      const SHEET_ID = '16qA-eK6T4PcSlP8tMrWN3BqQO4AXeQktJm9S2ReyTlc';
+      const upcomingList = document.getElementById('upcoming-shows-list');
+      const pastWrap = document.getElementById('past-shows-wrap');
+      const pastList = document.getElementById('past-shows-list');
+
+      function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, c => ({
+          '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+      }
+
+      // Google's gviz endpoint returns date-typed cells as "Date(Y,M,D)" (M is
+      // 0-indexed) rather than the ISO string that was typed in — handle both.
+      function parseGvizDate(raw) {
+        if (typeof raw !== 'string') return null;
+        const m = raw.match(/^Date\((\d+),(\d+),(\d+)\)$/);
+        if (m) return new Date(Number(m[1]), Number(m[2]), Number(m[3]));
+        const d = new Date(raw + 'T00:00:00');
+        return isNaN(d) ? null : d;
+      }
+
+      function formatDate(d) {
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      }
+
+      function showEmptyState() {
+        upcomingList.innerHTML = '<p class="text-stone text-sm reveal">No shows currently scheduled — check back soon.</p>';
+      }
+
+      try {
+        const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`);
+        const text = await res.text();
+        const json = JSON.parse(text.substring(text.indexOf('(') + 1, text.lastIndexOf(')')));
+        const cols = json.table.cols.map(c => (c.label || '').trim());
+        const idx = {
+          date:  cols.indexOf('Date'),
+          venue: cols.indexOf('Venue'),
+          city:  cols.indexOf('City'),
+          link:  cols.indexOf('Ticket Link'),
+          notes: cols.indexOf('Notes'),
+        };
+
+        const rows = (json.table.rows || []).map(row => {
+          const cell = i => (i === -1 || !row.c[i] || row.c[i].v == null) ? '' : row.c[i].v;
+          return {
+            date:  parseGvizDate(cell(idx.date)),
+            venue: String(cell(idx.venue)),
+            city:  String(cell(idx.city)),
+            link:  String(cell(idx.link)),
+            notes: String(cell(idx.notes)),
+          };
+        }).filter(r => r.date && r.venue);
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const upcoming = rows.filter(r => r.date >= today).sort((a, b) => a.date - b.date);
+        const past = rows.filter(r => r.date < today).sort((a, b) => b.date - a.date);
+
+        if (upcoming.length === 0) {
+          showEmptyState();
+        } else {
+          upcomingList.innerHTML = upcoming.map(r => {
+            const linkOk = /^https?:\/\//i.test(r.link);
+            return `
+              <div class="member-card reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <p class="font-heading text-ink text-lg">${formatDate(r.date)}</p>
+                  <p class="text-stone text-sm">${escapeHtml(r.venue)}${r.city ? ' &middot; ' + escapeHtml(r.city) : ''}</p>
+                  ${r.notes ? `<p class="text-fern text-xs uppercase tracking-[1px] mt-1">${escapeHtml(r.notes)}</p>` : ''}
+                </div>
+                ${linkOk ? `<a href="${escapeHtml(r.link)}" target="_blank" rel="noopener" class="btn-primary shrink-0">Tickets</a>` : ''}
+              </div>`;
+          }).join('');
+        }
+
+        if (past.length > 0) {
+          pastWrap.classList.remove('hidden');
+          pastList.innerHTML = past.map(r => `
+            <p class="track-row reveal text-stone text-sm">${formatDate(r.date)} &middot; ${escapeHtml(r.venue)}${r.city ? ', ' + escapeHtml(r.city) : ''}</p>
+          `).join('');
+        }
+
+        if (!noMotion) {
+          gsap.set('#shows .reveal', { opacity: 0, y: 14 });
+          ScrollTrigger.batch('#shows .reveal', {
+            start: 'top 90%',
+            onEnter:     batch => gsap.to(batch, { opacity: 1, y: 0, duration: 0.55, stagger: 0.07, ease: 'power2.out' }),
+            onLeaveBack: batch => gsap.to(batch, { opacity: 0, y: 8, duration: 0.25 }),
+          });
+        }
+      } catch (err) {
+        showEmptyState();
+        console.error('Failed to load shows:', err);
+      }
+    }
+    loadShows();
   </script>
 </body>
 </html>
