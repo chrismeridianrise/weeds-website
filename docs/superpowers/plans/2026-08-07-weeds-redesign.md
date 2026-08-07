@@ -20,7 +20,7 @@ Every task's requirements implicitly include this section.
 - **No copy above the Our Story section may mention family or geography.** The only geographic reference on the page is "central coast of California", inside John's story text. The word "Carmel" appears nowhere — John's supplied description does not use it, and nothing should reintroduce it.
 - Fonts unchanged: Cormorant Garamond (headings), Inter (body).
 - `prefers-reduced-motion: reduce` must disable all reveal animation and transitions, as the site does today.
-- No horizontal scroll at 320px viewport width.
+- No horizontal scroll at 320px viewport width. Buttons must not use `white-space: nowrap` — a long label plus uppercase and letter-spacing overflows a 320px viewport, and a wrapped button is better than a sideways-scrolling page.
 - The string `weedstrio` must not appear anywhere in the shipped site.
 - Never commit `.DS_Store`. If `git status` shows it, add it to `.gitignore` in that task's commit.
 - **Do not fabricate biographical facts.** Only text John supplied may appear in the story and bios.
@@ -368,9 +368,11 @@ rules with:
   text-transform: uppercase;
   text-decoration: none;
   transition: background 0.18s ease, color 0.18s ease;
-  white-space: nowrap;
+  max-width: 100%;
 }
-.btn-primary:hover { background: #DB6F3D; color: #F2EFE8; }
+/* Dark text on the orange hover: #F2EFE8 on #DB6F3D is only 2.88:1 and fails
+   AA, while #0E2417 on #DB6F3D is 4.95:1 and passes. */
+.btn-primary:hover { background: #DB6F3D; color: #0E2417; }
 .btn-primary:focus-visible { outline: 2px solid #FFCA57; outline-offset: 3px; }
 
 .btn-outline {
@@ -387,7 +389,7 @@ rules with:
   text-transform: uppercase;
   text-decoration: none;
   transition: border-color 0.18s ease, color 0.18s ease;
-  white-space: nowrap;
+  max-width: 100%;
 }
 .btn-outline:hover { border-color: #DB6F3D; color: #DB6F3D; }
 .btn-outline:focus-visible { outline: 2px solid rgba(242,239,232,0.7); outline-offset: 3px; }
