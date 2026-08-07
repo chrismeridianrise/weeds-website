@@ -14,7 +14,8 @@ Every task's requirements implicitly include this section.
 
 - **Design tokens** — `ground` `#0E2417`, `surface` `#14311F`, `brand` `#1F703F`, `accent` `#FFCA57`, `hover` `#DB6F3D`, `cream` `#F2EFE8`, `muted` `rgba(242,239,232,0.62)`, `hairline` `rgba(242,239,232,0.12)`.
 - **`brand` `#1F703F` must never be used for body text or any text below 18px.** It is permitted only for decorative rules and large-type accents. Eyebrow labels use `accent` or `muted`.
-- **`accent` `#FFCA57` is reserved for ticket CTAs and primary buttons only.** Do not use it for decoration.
+- **`accent` `#FFCA57` is the only bright color on the page.** At most one *filled* gold element is visible per viewport, and it is always the primary CTA — so the eye always lands on tickets first. Gold as a *text or icon* color is permitted and intended for small labels: eyebrows, instrument credits, show notes, social icons, and disclosure toggles. Never fill a non-CTA element with gold.
+- **`hover` `#DB6F3D` never appears in a resting state.** It is a hover, focus, or error color only.
 - All text/background pairs must meet WCAG AA: 4.5:1 for body text, 3:1 for text ≥ 18px bold or ≥ 24px.
 - **No copy above the Our Story section may mention family or geography.** The only geographic reference on the page is "central coast of California", inside John's story text. The word "Carmel" appears nowhere — John's supplied description does not use it, and nothing should reintroduce it.
 - Fonts unchanged: Cormorant Garamond (headings), Inter (body).
@@ -1804,7 +1805,7 @@ git commit -m "feat: add Connect section with Netlify Forms mailing list"
 - [ ] **Step 1: Sweep for the dead handle**
 
 ```bash
-grep -rn 'weedstrio' --exclude-dir=.git --exclude-dir=docs .
+grep -rn 'weedstrio' --exclude-dir=.git --exclude-dir=docs --exclude-dir=.superpowers .
 ```
 
 Expected: no output. Every hit is a bug — replace `weedstrio.bandcamp.com` with
@@ -1986,17 +1987,21 @@ Confirm:
 - [ ] **Step 8: Final launch check**
 
 - Every success criterion in the spec is met
-- `grep -rn 'weedstrio' --exclude-dir=.git --exclude-dir=docs .` returns nothing
+- `grep -rn 'weedstrio' --exclude-dir=.git --exclude-dir=docs --exclude-dir=.superpowers .` returns nothing
 - Sharing the URL in a messaging app shows the band photo and title from the OG tags
 - Tickets are reachable without scrolling on desktop
 
 - [ ] **Step 9: Commit and tag**
 
+Never use `git add -A` here — the working tree contains untracked `.claude/`
+and `.codex/` tool directories that must not ship. Stage explicitly:
+
 ```bash
-git add -A
+git status --short          # confirm nothing unexpected is staged
+git add index.html netlify.toml
 git commit -m "chore: launch weedsmusic.com"
 git tag -a v1.0 -m "Site launch"
-git push origin main --tags
+git push origin HEAD --tags
 ```
 
 ---
