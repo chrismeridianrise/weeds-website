@@ -91,9 +91,11 @@
       text-transform: uppercase;
       text-decoration: none;
       transition: background 0.18s ease, color 0.18s ease;
-      white-space: nowrap;
+      max-width: 100%;
     }
-    .btn-primary:hover { background: #DB6F3D; color: #F2EFE8; }
+    /* Dark text on the orange hover: #F2EFE8 on #DB6F3D is only 2.88:1 and fails
+       AA, while #0E2417 on #DB6F3D is 4.95:1 and passes. */
+    .btn-primary:hover { background: #DB6F3D; color: #0E2417; }
     .btn-primary:focus-visible { outline: 2px solid #FFCA57; outline-offset: 3px; }
 
     .btn-outline {
@@ -110,7 +112,7 @@
       text-transform: uppercase;
       text-decoration: none;
       transition: border-color 0.18s ease, color 0.18s ease;
-      white-space: nowrap;
+      max-width: 100%;
     }
     .btn-outline:hover { border-color: #DB6F3D; color: #DB6F3D; }
     .btn-outline:focus-visible { outline: 2px solid rgba(242,239,232,0.7); outline-offset: 3px; }
@@ -274,7 +276,7 @@
             </iframe>
           </div>
           <div class="mt-6 reveal">
-            <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-primary">Buy or Stream on Bandcamp</a>
+            <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-primary">Buy on Bandcamp</a>
           </div>
         </div>
 
