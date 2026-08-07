@@ -18,15 +18,14 @@
       theme: {
         extend: {
           colors: {
-            grove:  '#1b2b1d',
-            moss:   '#2d4a31',
-            fern:   '#3d6845',
-            amber:  '#8c6030',
-            parch:  '#f5f1ea',
-            linen:  '#ede9e0',
-            ink:    '#1a1a18',
-            stone:  '#63615b',
-            rule:   '#dedad2',
+            ground:   '#0E2417',
+            surface:  '#14311F',
+            brand:    '#1F703F',
+            accent:   '#FFCA57',
+            hover:    '#DB6F3D',
+            cream:    '#F2EFE8',
+            muted:    'rgba(242,239,232,0.62)',
+            hairline: 'rgba(242,239,232,0.12)',
           },
           fontFamily: {
             heading: ['Cormorant Garamond', 'Georgia', 'serif'],
@@ -45,9 +44,9 @@
     /* Nav */
     #main-nav { transition: background 0.3s ease, box-shadow 0.3s ease; }
     #main-nav.scrolled {
-      background: rgba(245,241,234,0.97);
+      background: rgba(14,36,23,0.94);
       backdrop-filter: blur(8px);
-      box-shadow: 0 1px 16px rgba(27,43,29,0.1);
+      box-shadow: 0 1px 0 rgba(242,239,232,0.12);
     }
 
     /* Hero */
@@ -70,67 +69,80 @@
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(27,43,29,0.15) 0%,
-        rgba(27,43,29,0.1)  40%,
-        rgba(27,43,29,0.55) 70%,
-        rgba(27,43,29,0.88) 100%
+        rgba(14,36,23,0.15) 0%,
+        rgba(14,36,23,0.1)  40%,
+        rgba(14,36,23,0.55) 70%,
+        rgba(14,36,23,0.88) 100%
       );
     }
     #hero > * { position: relative; z-index: 1; }
 
-    /* Buttons */
+    /* Primary = gold. Reserved for tickets and the one main CTA per section. */
     .btn-primary {
       display: inline-block;
-      background: #8c6030;
-      color: #fff;
-      padding: 11px 26px;
-      border-radius: 3px;
+      background: #FFCA57;
+      color: #0E2417;
+      padding: 12px 28px;
+      border-radius: 999px;
       font-family: Inter, system-ui, sans-serif;
       font-size: 0.8125rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       text-decoration: none;
-      transition: background 0.18s ease;
+      transition: background 0.18s ease, color 0.18s ease;
       white-space: nowrap;
     }
-    .btn-primary:hover { background: #6e4a24; }
-    .btn-primary:focus-visible { outline: 2px solid #8c6030; outline-offset: 3px; }
+    .btn-primary:hover { background: #DB6F3D; color: #F2EFE8; }
+    .btn-primary:focus-visible { outline: 2px solid #FFCA57; outline-offset: 3px; }
 
     .btn-outline {
       display: inline-block;
       background: transparent;
-      color: rgba(255,255,255,0.85);
-      border: 1px solid rgba(255,255,255,0.4);
-      padding: 11px 26px;
-      border-radius: 3px;
+      color: #F2EFE8;
+      border: 1px solid rgba(242,239,232,0.32);
+      padding: 12px 28px;
+      border-radius: 999px;
       font-family: Inter, system-ui, sans-serif;
       font-size: 0.8125rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       text-decoration: none;
       transition: border-color 0.18s ease, color 0.18s ease;
       white-space: nowrap;
     }
-    .btn-outline:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
-    .btn-outline:focus-visible { outline: 2px solid rgba(255,255,255,0.6); outline-offset: 3px; }
+    .btn-outline:hover { border-color: #DB6F3D; color: #DB6F3D; }
+    .btn-outline:focus-visible { outline: 2px solid rgba(242,239,232,0.7); outline-offset: 3px; }
+
+    /* Eyebrow labels. Gold, never `brand` — #1F703F on #0E2417 fails AA at this size. */
+    .eyebrow {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 0.6875rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #FFCA57;
+    }
+
+    .rule { border-top: 1px solid rgba(242,239,232,0.12); }
 
     /* Track list */
     .track-row {
-      border-top: 1px solid #dedad2;
+      border-top: 1px solid rgba(242,239,232,0.12);
       display: flex;
       align-items: baseline;
       gap: 1rem;
       padding: 0.65rem 0;
       transition: background 0.15s ease;
     }
-    .track-row:last-child { border-bottom: 1px solid #dedad2; }
+    .track-row:last-child { border-bottom: 1px solid rgba(242,239,232,0.12); }
 
     /* Mobile menu */
     #mobile-menu.open { opacity: 1; pointer-events: auto; }
 
     /* Member cards */
-    .member-card { border-top: 1px solid #dedad2; padding: 1.5rem 0; }
-    .member-card:last-child { border-bottom: 1px solid #dedad2; }
+    .member-card { border-top: 1px solid rgba(242,239,232,0.12); padding: 1.5rem 0; }
+    .member-card:last-child { border-bottom: 1px solid rgba(242,239,232,0.12); }
 
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1 !important; transform: none !important; }
@@ -161,8 +173,6 @@
       outline-offset: 3px;
       border-radius: 2px;
     }
-    .btn-primary:focus-visible { outline-color: #8c6030; }
-    .btn-outline:focus-visible  { outline-color: rgba(255,255,255,0.8); }
 
     /* Atmospheric photo divider */
     .photo-divider {
@@ -178,26 +188,26 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(27,43,29,0.18);
+      background: rgba(14,36,23,0.45);
     }
   </style>
 </head>
-<body class="bg-parch font-body text-ink">
+<body class="bg-ground font-body text-cream">
 
   <!-- Skip nav -->
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-parch focus:text-ink focus:px-4 focus:py-2 focus:rounded focus:shadow-lg focus:text-sm focus:font-medium">Skip to main content</a>
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:bg-accent focus:text-ground focus:px-4 focus:py-2 focus:rounded focus:shadow-lg focus:text-sm focus:font-medium">Skip to main content</a>
 
   <!-- Navigation -->
   <nav id="main-nav" aria-label="Main navigation" class="fixed top-0 left-0 right-0 z-50 bg-transparent">
     <div class="max-w-[1100px] mx-auto flex justify-between items-center h-[68px] px-6">
-      <a href="#" class="font-body text-white text-[11px] tracking-[3px] uppercase font-medium leading-none" style="text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
+      <a href="#" class="font-body text-cream text-[11px] tracking-[3px] uppercase font-medium leading-none" style="text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
         The Weeds
       </a>
       <div class="hidden md:flex items-center gap-8">
-        <a href="#music"   class="text-sm text-white/80 hover:text-white transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Music</a>
-        <a href="#about"   class="text-sm text-white/80 hover:text-white transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">About</a>
-        <a href="#shows"   class="text-sm text-white/80 hover:text-white transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Shows</a>
-        <a href="#contact" class="text-sm text-white/80 hover:text-white transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Contact</a>
+        <a href="#music"   class="text-sm text-cream/80 hover:text-cream transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Music</a>
+        <a href="#about"   class="text-sm text-cream/80 hover:text-cream transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">About</a>
+        <a href="#shows"   class="text-sm text-cream/80 hover:text-cream transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Shows</a>
+        <a href="#contact" class="text-sm text-cream/80 hover:text-cream transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Contact</a>
         <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-primary ml-2">Listen on Bandcamp</a>
       </div>
       <button id="menu-toggle" class="md:hidden p-2 -mr-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -211,12 +221,12 @@
   </nav>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" class="fixed inset-0 z-40 bg-grove flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true">
-    <button id="menu-close" class="absolute top-5 right-6 text-white/40 hover:text-white text-3xl leading-none" aria-label="Close menu">&times;</button>
-    <a href="#music"   class="mobile-nav-link font-heading text-2xl text-white/80 hover:text-white transition-colors italic">Music</a>
-    <a href="#about"   class="mobile-nav-link font-heading text-2xl text-white/80 hover:text-white transition-colors italic">About</a>
-    <a href="#shows"   class="mobile-nav-link font-heading text-2xl text-white/80 hover:text-white transition-colors italic">Shows</a>
-    <a href="#contact" class="mobile-nav-link font-heading text-2xl text-white/80 hover:text-white transition-colors italic">Contact</a>
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" class="fixed inset-0 z-40 bg-ground flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true">
+    <button id="menu-close" class="absolute top-5 right-6 text-cream/40 hover:text-cream text-3xl leading-none" aria-label="Close menu">&times;</button>
+    <a href="#music"   class="mobile-nav-link font-heading text-2xl text-cream/80 hover:text-cream transition-colors italic">Music</a>
+    <a href="#about"   class="mobile-nav-link font-heading text-2xl text-cream/80 hover:text-cream transition-colors italic">About</a>
+    <a href="#shows"   class="mobile-nav-link font-heading text-2xl text-cream/80 hover:text-cream transition-colors italic">Shows</a>
+    <a href="#contact" class="mobile-nav-link font-heading text-2xl text-cream/80 hover:text-cream transition-colors italic">Contact</a>
     <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="mobile-nav-link mt-2 btn-primary">Listen on Bandcamp</a>
   </div>
 
@@ -227,8 +237,8 @@
     <h1 class="sr-only">The Weeds</h1>
     <div class="max-w-[1100px] mx-auto px-6 pb-16 md:pb-24 w-full">
       <div class="max-w-xl">
-        <p class="hero-eyebrow text-[11px] tracking-[3px] uppercase font-body mb-6" style="color:rgba(255,255,255,0.75);">Carmel, California &nbsp;&middot;&nbsp; Celtic Folk</p>
-        <p class="hero-sub text-base md:text-lg leading-relaxed mb-8" style="color:rgba(255,255,255,0.8);">
+        <p class="hero-eyebrow text-[11px] tracking-[3px] uppercase font-body mb-6" style="color:#FFCA57;">Carmel, California &nbsp;&middot;&nbsp; Celtic Folk</p>
+        <p class="hero-sub text-base md:text-lg leading-relaxed mb-8" style="color:#F2EFE8;">
           Fiddle, harp, and mandolin. Traditional Irish melodies woven with original compositions.
         </p>
         <div class="hero-ctas flex flex-wrap gap-4">
@@ -240,16 +250,16 @@
   </section>
 
   <!-- Album / Music -->
-  <section id="music" class="bg-parch py-20 md:py-28 border-b border-rule">
+  <section id="music" class="bg-ground py-20 md:py-28 border-b border-hairline">
     <div class="max-w-[1100px] mx-auto px-6">
       <div class="flex flex-col lg:flex-row gap-14 lg:gap-20 items-start">
 
         <!-- Left: info + player -->
         <div class="flex-1 min-w-0">
-          <p class="reveal text-fern text-[11px] tracking-[3px] uppercase font-body mb-5">Debut Album</p>
-          <h2 class="reveal font-heading text-ink text-4xl md:text-5xl italic mb-3">Supernatural</h2>
-          <p class="reveal text-stone text-sm tracking-wide mb-8">Released March 13, 2026 &nbsp;&middot;&nbsp; 10 tracks &nbsp;&middot;&nbsp; Mixed &amp; mastered by Jürgen Treyz</p>
-          <p class="reveal text-ink text-base leading-relaxed max-w-lg mb-10">
+          <p class="reveal text-accent text-[11px] tracking-[3px] uppercase font-body mb-5">Debut Album</p>
+          <h2 class="reveal font-heading text-cream text-4xl md:text-5xl italic mb-3">Supernatural</h2>
+          <p class="reveal text-muted text-sm tracking-wide mb-8">Released March 13, 2026 &nbsp;&middot;&nbsp; 10 tracks &nbsp;&middot;&nbsp; Mixed &amp; mastered by Jürgen Treyz</p>
+          <p class="reveal text-cream text-base leading-relaxed max-w-lg mb-10">
             Gathered from countless hours of playing, composing, long nights at fiddle camps, and years of performing together: the trio's favorite tune sets and original compositions, recorded at home in summer 2025.
           </p>
           <!-- Bandcamp embed -->
@@ -257,7 +267,7 @@
             <iframe
               title="Supernatural by The Weeds on Bandcamp"
               style="border:0; width:100%; height:120px;"
-              src="https://bandcamp.com/EmbeddedPlayer/album=659904141/size=small/bgcol=f5f1ea/linkcol=8c6030/transparent=true/"
+              src="https://bandcamp.com/EmbeddedPlayer/album=659904141/size=small/bgcol=0e2417/linkcol=ffca57/transparent=true/"
               seamless
               loading="lazy">
               <a href="https://weedstrio.bandcamp.com/album/supernatural">Supernatural by The Weeds</a>
@@ -270,57 +280,57 @@
 
         <!-- Right: track listing -->
         <div class="lg:w-72 shrink-0 self-start">
-          <p class="reveal text-[11px] tracking-[3px] uppercase font-body text-stone mb-4" id="tracklist-label">Track Listing</p>
+          <p class="reveal text-[11px] tracking-[3px] uppercase font-body text-muted mb-4" id="tracklist-label">Track Listing</p>
           <ol class="list-none m-0 p-0" aria-labelledby="tracklist-label">
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">1</span>
-              <span class="text-ink text-sm flex-1">Supernatural</span>
-              <span class="text-stone text-xs shrink-0">3:23</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">1</span>
+              <span class="text-cream text-sm flex-1">Supernatural</span>
+              <span class="text-muted text-xs shrink-0">3:23</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">2</span>
-              <span class="text-ink text-sm flex-1">Old Favorite</span>
-              <span class="text-stone text-xs shrink-0">4:48</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">2</span>
+              <span class="text-cream text-sm flex-1">Old Favorite</span>
+              <span class="text-muted text-xs shrink-0">4:48</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">3</span>
-              <span class="text-ink text-sm flex-1">Take Seven</span>
-              <span class="text-stone text-xs shrink-0">4:59</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">3</span>
+              <span class="text-cream text-sm flex-1">Take Seven</span>
+              <span class="text-muted text-xs shrink-0">4:59</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">4</span>
-              <span class="text-ink text-sm flex-1">Bold Doherty</span>
-              <span class="text-stone text-xs shrink-0">4:39</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">4</span>
+              <span class="text-cream text-sm flex-1">Bold Doherty</span>
+              <span class="text-muted text-xs shrink-0">4:39</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">5</span>
-              <span class="text-ink text-sm flex-1">Robert Jordan</span>
-              <span class="text-stone text-xs shrink-0">3:53</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">5</span>
+              <span class="text-cream text-sm flex-1">Robert Jordan</span>
+              <span class="text-muted text-xs shrink-0">3:53</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">6</span>
-              <span class="text-ink text-sm flex-1">Curlew</span>
-              <span class="text-stone text-xs shrink-0">4:08</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">6</span>
+              <span class="text-cream text-sm flex-1">Curlew</span>
+              <span class="text-muted text-xs shrink-0">4:08</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">7</span>
-              <span class="text-ink text-sm flex-1">Storm King</span>
-              <span class="text-stone text-xs shrink-0">5:03</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">7</span>
+              <span class="text-cream text-sm flex-1">Storm King</span>
+              <span class="text-muted text-xs shrink-0">5:03</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">8</span>
-              <span class="text-ink text-sm flex-1">Sí Bheag, Sí Mhór</span>
-              <span class="text-stone text-xs shrink-0">3:46</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">8</span>
+              <span class="text-cream text-sm flex-1">Sí Bheag, Sí Mhór</span>
+              <span class="text-muted text-xs shrink-0">3:46</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">9</span>
-              <span class="text-ink text-sm flex-1">Castle Kelly</span>
-              <span class="text-stone text-xs shrink-0">4:54</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">9</span>
+              <span class="text-cream text-sm flex-1">Castle Kelly</span>
+              <span class="text-muted text-xs shrink-0">4:54</span>
             </li>
             <li class="track-row reveal">
-              <span aria-hidden="true" class="text-stone text-xs w-5 shrink-0">10</span>
-              <span class="text-ink text-sm flex-1">Memory of Michael Coleman</span>
-              <span class="text-stone text-xs shrink-0">6:27</span>
+              <span aria-hidden="true" class="text-muted text-xs w-5 shrink-0">10</span>
+              <span class="text-cream text-sm flex-1">Memory of Michael Coleman</span>
+              <span class="text-muted text-xs shrink-0">6:27</span>
             </li>
           </ol>
         </div>
@@ -334,19 +344,19 @@
   <div class="photo-divider" aria-hidden="true" style="background-image: url('assets/images/barn-divider.jpg'); background-position: center 55%;"></div>
 
 <!-- About -->
-  <section id="about" class="bg-linen py-20 md:py-28">
+  <section id="about" class="bg-surface py-20 md:py-28">
     <div class="max-w-[1100px] mx-auto px-6">
 
       <!-- Section header -->
       <div class="max-w-2xl mb-16">
-        <p class="reveal text-fern text-[11px] tracking-[3px] uppercase font-body mb-5">The Band</p>
-        <h2 class="reveal font-heading text-ink text-3xl md:text-4xl leading-[1.2] mb-6">
+        <p class="reveal text-accent text-[11px] tracking-[3px] uppercase font-body mb-5">The Band</p>
+        <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2] mb-6">
           A family trio rooted in tradition.
         </h2>
-        <p class="reveal text-stone text-sm leading-relaxed mb-4">
+        <p class="reveal text-muted text-sm leading-relaxed mb-4">
           The Weeds are John, Tyler, and Evan Weed, a father and two sons from Carmel, California. They grew up traveling together to folk festivals and sessions across the West Coast, building a shared musical language across fiddle, harp, mandolin, guitar, tenor banjo, piano, and melodica.
         </p>
-        <p class="reveal text-stone text-sm leading-relaxed">
+        <p class="reveal text-muted text-sm leading-relaxed">
           Their music moves between traditional Irish tunes and original compositions, always with the same ease, as if there is no line between the two.
         </p>
       </div>
@@ -358,27 +368,27 @@
           <div class="member-photo">
             <img src="assets/images/member-john.jpg" alt="John Weed playing fiddle" loading="lazy" style="object-position: center 15%;">
           </div>
-          <h3 class="font-heading text-ink text-xl mb-1">John Weed</h3>
-          <p class="text-fern text-[11px] tracking-[2px] uppercase font-body mb-3">Fiddle</p>
-          <p class="text-stone text-sm leading-relaxed">The anchor of the trio, John's fiddle carries the Irish tradition with warmth and authority. He plays a violin by James Wimmer.</p>
+          <h3 class="font-heading text-cream text-xl mb-1">John Weed</h3>
+          <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Fiddle</p>
+          <p class="text-muted text-sm leading-relaxed">The anchor of the trio, John's fiddle carries the Irish tradition with warmth and authority. He plays a violin by James Wimmer.</p>
         </div>
 
         <div class="reveal">
           <div class="member-photo">
             <img src="assets/images/member-evan-2.png" alt="Evan Weed playing Celtic harp" loading="lazy" style="object-position: center 20%;">
           </div>
-          <h3 class="font-heading text-ink text-xl mb-1">Evan Weed</h3>
-          <p class="text-fern text-[11px] tracking-[2px] uppercase font-body mb-3">Celtic Harp &middot; Piano &middot; Melodica</p>
-          <p class="text-stone text-sm leading-relaxed">Evan's harp gives the trio its distinctive voice: resonant, unexpected, and grounding. He moves fluidly between harp, piano, and melodica.</p>
+          <h3 class="font-heading text-cream text-xl mb-1">Evan Weed</h3>
+          <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Celtic Harp &middot; Piano &middot; Melodica</p>
+          <p class="text-muted text-sm leading-relaxed">Evan's harp gives the trio its distinctive voice: resonant, unexpected, and grounding. He moves fluidly between harp, piano, and melodica.</p>
         </div>
 
         <div class="reveal">
           <div class="member-photo">
             <img src="assets/images/member-tyler.jpg" alt="Tyler Weed playing mandolin" loading="lazy" style="object-position: center 15%;">
           </div>
-          <h3 class="font-heading text-ink text-xl mb-1">Tyler Weed</h3>
-          <p class="text-fern text-[11px] tracking-[2px] uppercase font-body mb-3">Mandolin &middot; Guitar &middot; Tenor Banjo</p>
-          <p class="text-stone text-sm leading-relaxed">Tyler drives the rhythm and melody in equal measure, moving across mandolin, guitar, and tenor banjo as the music demands.</p>
+          <h3 class="font-heading text-cream text-xl mb-1">Tyler Weed</h3>
+          <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Mandolin &middot; Guitar &middot; Tenor Banjo</p>
+          <p class="text-muted text-sm leading-relaxed">Tyler drives the rhythm and melody in equal measure, moving across mandolin, guitar, and tenor banjo as the music demands.</p>
         </div>
 
       </div>
@@ -386,26 +396,26 @@
   </section>
 
   <!-- Shows -->
-  <section id="shows" class="bg-parch py-20 md:py-28 border-b border-rule">
+  <section id="shows" class="bg-ground py-20 md:py-28 border-b border-hairline">
     <div class="max-w-[1100px] mx-auto px-6">
 
       <!-- Section header -->
       <div class="max-w-2xl mb-16">
-        <p class="reveal text-fern text-[11px] tracking-[3px] uppercase font-body mb-5">Shows</p>
-        <h2 class="reveal font-heading text-ink text-3xl md:text-4xl leading-[1.2] mb-6">
+        <p class="reveal text-accent text-[11px] tracking-[3px] uppercase font-body mb-5">Shows</p>
+        <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2] mb-6">
           Catch them live.
         </h2>
       </div>
 
       <!-- Upcoming shows -->
       <div class="mb-16">
-        <p class="reveal text-[11px] tracking-[3px] uppercase font-body text-stone mb-4">Upcoming</p>
+        <p class="reveal text-[11px] tracking-[3px] uppercase font-body text-muted mb-4">Upcoming</p>
         <div id="upcoming-shows-list"></div>
       </div>
 
       <!-- Previous engagements -->
       <div id="past-shows-wrap" class="hidden">
-        <p class="reveal text-[11px] tracking-[3px] uppercase font-body text-stone mb-4">Previous Engagements</p>
+        <p class="reveal text-[11px] tracking-[3px] uppercase font-body text-muted mb-4">Previous Engagements</p>
         <div id="past-shows-list"></div>
       </div>
 
@@ -413,42 +423,42 @@
   </section>
 
   <!-- Contact / Connect -->
-  <section id="contact" class="bg-grove py-20 md:py-28">
+  <section id="contact" class="bg-surface py-20 md:py-28">
     <div class="max-w-[1100px] mx-auto px-6">
       <div class="flex flex-col md:flex-row gap-14 md:gap-20 md:items-end">
 
         <div class="md:w-1/2">
-          <p class="reveal text-[11px] tracking-[3px] uppercase font-body mb-4" style="color:rgba(255,255,255,0.65);">Get in Touch</p>
-          <h2 class="reveal font-heading text-white text-3xl md:text-4xl leading-[1.2] mb-5">
+          <p class="reveal text-[11px] tracking-[3px] uppercase font-body mb-4" style="color:rgba(242,239,232,0.62);">Get in Touch</p>
+          <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2] mb-5">
             Bookings &amp; inquiries.
           </h2>
-          <p class="reveal text-sm leading-relaxed mb-8" style="color:rgba(255,255,255,0.6);">
+          <p class="reveal text-sm leading-relaxed mb-8" style="color:rgba(242,239,232,0.62);">
             Interested in having The Weeds perform? Reach out by email and they will get back to you.
           </p>
           <div class="reveal flex flex-col gap-4">
             <a href="mailto:info@weedstrio.com" class="btn-primary self-start">Email the Band</a>
-            <p class="text-xs" style="color:rgba(255,255,255,0.65);">Or write to <span style="color:rgba(255,255,255,0.9);">info@weedstrio.com</span></p>
+            <p class="text-xs" style="color:rgba(242,239,232,0.62);">Or write to <span style="color:#F2EFE8;">info@weedstrio.com</span></p>
           </div>
         </div>
 
         <div class="md:w-1/2">
-          <p class="reveal text-[11px] tracking-[3px] uppercase font-body mb-5" style="color:rgba(255,255,255,0.65);">Follow Along</p>
+          <p class="reveal text-[11px] tracking-[3px] uppercase font-body mb-5" style="color:rgba(242,239,232,0.62);">Follow Along</p>
           <div class="reveal flex flex-col gap-4">
             <a href="https://www.instagram.com/weedstrio" target="_blank" rel="noopener"
-               class="flex items-center gap-4 group" style="color:rgba(255,255,255,0.65);">
+               class="flex items-center gap-4 group" style="color:rgba(242,239,232,0.62);">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <circle cx="12" cy="12" r="4"/>
                 <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
               </svg>
-              <span class="text-sm group-hover:text-white transition-colors">@weedstrio</span>
+              <span class="text-sm group-hover:text-cream transition-colors">@weedstrio</span>
             </a>
             <a href="https://weedstrio.bandcamp.com" target="_blank" rel="noopener"
-               class="flex items-center gap-4 group" style="color:rgba(255,255,255,0.65);">
+               class="flex items-center gap-4 group" style="color:rgba(242,239,232,0.62);">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
               </svg>
-              <span class="text-sm group-hover:text-white transition-colors">weedstrio.bandcamp.com</span>
+              <span class="text-sm group-hover:text-cream transition-colors">weedstrio.bandcamp.com</span>
             </a>
           </div>
         </div>
@@ -460,11 +470,11 @@
   </main>
 
   <!-- Footer -->
-  <footer class="bg-grove border-t py-7" style="border-color:rgba(255,255,255,0.07);">
-    <div class="max-w-[1100px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs" style="color:rgba(255,255,255,0.6);">
-      <span class="font-heading italic text-sm" style="color:rgba(255,255,255,0.65);">The Weeds</span>
+  <footer class="bg-ground border-t py-7" style="border-color:rgba(255,255,255,0.07);">
+    <div class="max-w-[1100px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs" style="color:rgba(242,239,232,0.62);">
+      <span class="font-heading italic text-sm" style="color:rgba(242,239,232,0.62);">The Weeds</span>
       <span>&copy; 2026 The Weeds &nbsp;&middot;&nbsp; Carmel, California</span>
-      <a href="https://weedstrio.bandcamp.com" target="_blank" rel="noopener" class="hover:text-white transition-colors" style="color:rgba(255,255,255,0.6);">Bandcamp</a>
+      <a href="https://weedstrio.bandcamp.com" target="_blank" rel="noopener" class="hover:text-cream transition-colors" style="color:rgba(242,239,232,0.62);">Bandcamp</a>
     </div>
   </footer>
 
@@ -483,11 +493,11 @@
         a.style.textShadow = scrolled ? 'none' : '0 1px 4px rgba(0,0,0,0.4)';
       });
       const wordmark = nav.querySelector('a:first-child');
-      wordmark.style.color = scrolled ? '#1a1a18' : 'white';
+      wordmark.style.color = scrolled ? '#F2EFE8' : 'white';
       wordmark.style.textShadow = scrolled ? 'none' : '0 1px 6px rgba(0,0,0,0.5)';
       navLinks.forEach(a => {
         if (!a.classList.contains('btn-primary')) {
-          a.style.color = scrolled ? '#7a7870' : 'rgba(255,255,255,0.8)';
+          a.style.color = scrolled ? 'rgba(242,239,232,0.62)' : '#F2EFE8';
           a.style.textShadow = scrolled ? 'none' : '0 1px 4px rgba(0,0,0,0.4)';
         }
       });
@@ -565,7 +575,7 @@
       }
 
       function showEmptyState() {
-        upcomingList.innerHTML = '<p class="text-stone text-sm reveal">No shows currently scheduled — check back soon.</p>';
+        upcomingList.innerHTML = '<p class="text-muted text-sm reveal">No shows currently scheduled — check back soon.</p>';
       }
 
       try {
@@ -606,9 +616,9 @@
             return `
               <div class="member-card reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
-                  <p class="font-heading text-ink text-lg">${formatDate(r.date)}</p>
-                  <p class="text-stone text-sm">${escapeHtml(r.venue)}${r.city ? ' &middot; ' + escapeHtml(r.city) : ''}</p>
-                  ${r.notes ? `<p class="text-fern text-xs uppercase tracking-[1px] mt-1">${escapeHtml(r.notes)}</p>` : ''}
+                  <p class="font-heading text-cream text-lg">${formatDate(r.date)}</p>
+                  <p class="text-muted text-sm">${escapeHtml(r.venue)}${r.city ? ' &middot; ' + escapeHtml(r.city) : ''}</p>
+                  ${r.notes ? `<p class="text-accent text-xs uppercase tracking-[1px] mt-1">${escapeHtml(r.notes)}</p>` : ''}
                 </div>
                 ${linkOk ? `<a href="${escapeHtml(r.link)}" target="_blank" rel="noopener" class="btn-primary shrink-0">Tickets</a>` : ''}
               </div>`;
@@ -618,7 +628,7 @@
         if (past.length > 0) {
           pastWrap.classList.remove('hidden');
           pastList.innerHTML = past.map(r => `
-            <p class="track-row reveal text-stone text-sm">${formatDate(r.date)} &middot; ${escapeHtml(r.venue)}${r.city ? ', ' + escapeHtml(r.city) : ''}</p>
+            <p class="track-row reveal text-muted text-sm">${formatDate(r.date)} &middot; ${escapeHtml(r.venue)}${r.city ? ', ' + escapeHtml(r.city) : ''}</p>
           `).join('');
         }
 
