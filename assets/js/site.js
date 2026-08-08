@@ -191,3 +191,25 @@ function renderNextShow(rows) {
         : ''}
     </div>`;
 }
+
+/**
+ * Swap the poster for a real iframe on click. autoplay=1 is safe here because
+ * the swap is user-initiated, so the browser's autoplay policy permits it.
+ */
+document.querySelectorAll('.video-facade').forEach(facade => {
+  const btn = facade.querySelector('.video-facade__btn');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    const id = facade.dataset.videoId;
+    if (!id) return;
+
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`;
+    iframe.title = 'The Weeds, live';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    iframe.allowFullscreen = true;
+    facade.replaceChildren(iframe);
+    iframe.focus();
+  }, { once: true });
+});

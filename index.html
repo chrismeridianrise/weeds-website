@@ -223,6 +223,49 @@
       inset: 0;
       background: rgba(14,36,23,0.45);
     }
+
+    /* Click-to-play facade: avoids ~1MB of YouTube JS and pre-consent cookies. */
+    .video-facade {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #0E2417;
+    }
+    .video-facade__btn {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      cursor: pointer;
+      background: none;
+    }
+    .video-facade__btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, opacity 0.3s ease;
+    }
+    .video-facade__btn:hover img { transform: scale(1.03); opacity: 0.85; }
+    .video-facade__play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      width: 74px;
+      height: 74px;
+      padding-left: 4px;
+      border-radius: 999px;
+      background: #FFCA57;
+      color: #0E2417;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+    .video-facade__btn:hover .video-facade__play { background: #DB6F3D; color: #F2EFE8; }
+    .video-facade__btn:focus-visible { outline: 2px solid #FFCA57; outline-offset: 3px; }
+    .video-facade iframe { width: 100%; height: 100%; border: 0; display: block; }
   </style>
 </head>
 <body class="bg-ground font-body text-cream">
@@ -365,6 +408,27 @@
           leave uplifted, knowing the future is in good hands as The Weeds raises
           your spirits, honoring this tradition with a vital, new voice.
         </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video -->
+  <section id="video" class="bg-surface py-20 md:py-28">
+    <div class="max-w-[1180px] mx-auto px-6">
+      <div class="max-w-3xl mb-12">
+        <p class="reveal eyebrow mb-5">Watch</p>
+        <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2]">
+          The Weeds, live.
+        </h2>
+      </div>
+
+      <div class="reveal video-facade" data-video-id="4eLVqORprSE">
+        <button type="button" class="video-facade__btn" aria-label="Play video: The Weeds, live">
+          <img src="assets/images/video-poster.jpg" alt="" loading="lazy" decoding="async">
+          <span class="video-facade__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </button>
       </div>
     </div>
   </section>
