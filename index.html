@@ -23,7 +23,7 @@
             surface:  '#14311F',
             brand:    '#1F703F',
             accent:   '#FFCA57',
-            hover:    '#DB6F3D',
+            hover:    '#E37B42',
             cream:    '#F2EFE8',
             muted:    'rgba(242,239,232,0.62)',
             hairline: 'rgba(242,239,232,0.12)',
@@ -97,9 +97,12 @@
       transition: background 0.18s ease, color 0.18s ease;
       max-width: 100%;
     }
-    /* Dark text on the orange hover: #F2EFE8 on #DB6F3D is only 2.88:1 and fails
-       AA, while #0E2417 on #DB6F3D is 4.95:1 and passes. */
-    .btn-primary:hover { background: #DB6F3D; color: #0E2417; }
+    /* Hover orange is #E37B42, not the raw brand-adjacent #DB6F3D: #DB6F3D cleared
+       AA against `ground` (4.95:1) but only hit 4.27:1 against `surface`, failing
+       the 4.5:1 body-text minimum. #E37B42 clears both (5.59:1 on ground, 4.82:1 on
+       surface). Dark text on the orange hover: #F2EFE8 on #E37B42 is only 2.55:1 and
+       fails AA, while #0E2417 on #E37B42 is 5.59:1 and passes. */
+    .btn-primary:hover { background: #E37B42; color: #0E2417; }
     .btn-primary:focus-visible { outline: 2px solid #FFCA57; outline-offset: 3px; }
 
     .btn-outline {
@@ -118,7 +121,7 @@
       transition: border-color 0.18s ease, color 0.18s ease;
       max-width: 100%;
     }
-    .btn-outline:hover { border-color: #DB6F3D; color: #DB6F3D; }
+    .btn-outline:hover { border-color: #E37B42; color: #E37B42; }
     .btn-outline:focus-visible { outline: 2px solid rgba(242,239,232,0.7); outline-offset: 3px; }
 
     /* Eyebrow labels. Gold, never `brand` — #1F703F on #0E2417 fails AA at this size. */
@@ -215,7 +218,7 @@
       transition: color 0.18s ease;
     }
     .bio > summary::-webkit-details-marker { display: none; }
-    .bio > summary:hover { color: #DB6F3D; }
+    .bio > summary:hover { color: #E37B42; }
     .bio > summary:focus-visible { outline: 2px solid #FFCA57; outline-offset: 3px; border-radius: 2px; }
     .bio > summary::after {
       content: '';
@@ -313,7 +316,7 @@
       color: #0E2417;
       transition: background 0.18s ease, color 0.18s ease;
     }
-    .video-facade__btn:hover .video-facade__play { background: #DB6F3D; color: #F2EFE8; }
+    .video-facade__btn:hover .video-facade__play { background: #E37B42; color: #0E2417; }
     .video-facade__btn:focus-visible { outline: 2px solid #FFCA57; outline-offset: 3px; }
     .video-facade iframe { width: 100%; height: 100%; border: 0; display: block; }
   </style>

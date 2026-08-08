@@ -209,7 +209,7 @@ mlForm?.addEventListener('submit', async e => {
     mlStatus.textContent = 'Thanks — you’re on the list.';
   } catch (err) {
     submit.disabled = false;
-    mlStatus.style.color = '#DB6F3D';
+    mlStatus.style.color = '#E37B42';
     mlStatus.textContent = 'Something went wrong. Please email info@weedsmusic.com instead.';
     console.error('Mailing list signup failed:', err);
   }
