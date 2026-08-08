@@ -55,90 +55,57 @@ document.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('c
 mobileMenu.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
 // Shows: fetch gig list from Google Sheets and render Upcoming / Previous Engagements
+const SHEET_ID = '16qA-eK6T4PcSlP8tMrWN3BqQO4AXeQktJm9S2ReyTlc';
+
+function showRow(r) {
+  const where = r.city
+    ? `${escapeHtml(r.venue)} &middot; ${escapeHtml(r.city)}`
+    : escapeHtml(r.venue);
+  return `
+    <div class="show-row reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div>
+        <p class="font-heading text-cream text-lg">${formatShowDate(r.date)}</p>
+        <p class="text-muted text-sm">${where}</p>
+        ${r.notes ? `<p class="text-accent text-xs uppercase tracking-[1px] mt-1">${escapeHtml(r.notes)}</p>` : ''}
+      </div>
+      ${hasTicketLink(r)
+        ? `<a href="${escapeHtml(r.link)}" target="_blank" rel="noopener" class="btn-primary shrink-0">Tickets</a>`
+        : ''}
+    </div>`;
+}
+
 async function loadShows() {
-  const SHEET_ID = '16qA-eK6T4PcSlP8tMrWN3BqQO4AXeQktJm9S2ReyTlc';
   const upcomingList = document.getElementById('upcoming-shows-list');
-  const pastWrap = document.getElementById('past-shows-wrap');
-  const pastList = document.getElementById('past-shows-list');
+  const pastWrap     = document.getElementById('past-shows-wrap');
+  const pastList     = document.getElementById('past-shows-list');
 
-  function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[c]));
-  }
-
-  // Google's gviz endpoint returns date-typed cells as "Date(Y,M,D)" (M is
-  // 0-indexed) rather than the ISO string that was typed in — handle both.
-  function parseGvizDate(raw) {
-    if (typeof raw !== 'string') return null;
-    const m = raw.match(/^Date\((\d+),(\d+),(\d+)\)$/);
-    if (m) return new Date(Number(m[1]), Number(m[2]), Number(m[3]));
-    const d = new Date(raw + 'T00:00:00');
-    return isNaN(d) ? null : d;
-  }
-
-  function formatDate(d) {
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  }
-
-  function showEmptyState() {
-    upcomingList.innerHTML = '<p class="text-muted text-sm reveal">No shows currently scheduled — check back soon.</p>';
-  }
+  const showEmptyState = () => {
+    upcomingList.innerHTML =
+      '<p class="text-muted text-sm reveal">No shows currently scheduled &mdash; check back soon.</p>';
+  };
 
   try {
-    const res = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`);
-    const text = await res.text();
-    const json = JSON.parse(text.substring(text.indexOf('(') + 1, text.lastIndexOf(')')));
-    const cols = json.table.cols.map(c => (c.label || '').trim());
-    const idx = {
-      date:  cols.indexOf('Date'),
-      venue: cols.indexOf('Venue'),
-      city:  cols.indexOf('City'),
-      link:  cols.indexOf('Ticket Link'),
-      notes: cols.indexOf('Notes'),
-    };
-
-    const rows = (json.table.rows || []).map(row => {
-      const cell = i => (i === -1 || !row.c[i] || row.c[i].v == null) ? '' : row.c[i].v;
-      return {
-        date:  parseGvizDate(cell(idx.date)),
-        venue: String(cell(idx.venue)),
-        city:  String(cell(idx.city)),
-        link:  String(cell(idx.link)),
-        notes: String(cell(idx.notes)),
-      };
-    }).filter(r => r.date && r.venue);
+    const res = await fetch(
+      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`
+    );
+    const rows = parseGvizResponse(await res.text());
 
     renderNextShow(rows);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const upcoming = rows.filter(r => r.date >= today).sort((a, b) => a.date - b.date);
-    const past = rows.filter(r => r.date < today).sort((a, b) => b.date - a.date);
+    const { upcoming, past } = partitionShows(rows, new Date());
 
     if (upcoming.length === 0) {
       showEmptyState();
     } else {
-      upcomingList.innerHTML = upcoming.map(r => {
-        const linkOk = /^https?:\/\//i.test(r.link);
-        return `
-          <div class="member-card reveal flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-              <p class="font-heading text-cream text-lg">${formatDate(r.date)}</p>
-              <p class="text-muted text-sm">${escapeHtml(r.venue)}${r.city ? ' &middot; ' + escapeHtml(r.city) : ''}</p>
-              ${r.notes ? `<p class="text-accent text-xs uppercase tracking-[1px] mt-1">${escapeHtml(r.notes)}</p>` : ''}
-            </div>
-            ${linkOk ? `<a href="${escapeHtml(r.link)}" target="_blank" rel="noopener" class="btn-primary shrink-0">Tickets</a>` : ''}
-          </div>`;
-      }).join('');
+      upcomingList.innerHTML = upcoming.map(showRow).join('');
     }
 
     if (past.length > 0) {
       pastWrap.classList.remove('hidden');
       pastList.innerHTML = past.map(r => `
-        <p class="track-row reveal text-muted text-sm">${formatDate(r.date)} &middot; ${escapeHtml(r.venue)}${r.city ? ', ' + escapeHtml(r.city) : ''}</p>
-      `).join('');
+        <p class="show-row reveal text-muted text-sm">
+          ${formatShowDate(r.date)} &middot; ${escapeHtml(r.venue)}${r.city ? ', ' + escapeHtml(r.city) : ''}
+        </p>`).join('');
     }
 
     if (!noMotion) {
