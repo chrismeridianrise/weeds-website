@@ -49,6 +49,9 @@
       backdrop-filter: blur(8px);
       box-shadow: 0 1px 0 rgba(242,239,232,0.12);
     }
+    /* Before the nav goes opaque, text/icons sit directly over the hero photo.
+       A shadow keeps them AA-legible against light gaps in the canopy. */
+    #main-nav:not(.scrolled) a { text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 
     /* Hero */
     #hero {
