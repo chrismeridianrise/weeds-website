@@ -6,7 +6,7 @@ import {
   partitionShows,
   nextShow,
   hasTicketLink,
-} from '../assets/js/shows.js';
+} from '../site/assets/js/shows.js';
 
 test('parseGvizDate reads the Date(y,m,d) form with a zero-indexed month', () => {
   const d = parseGvizDate('Date(2026,7,14)');
