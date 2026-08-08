@@ -132,6 +132,33 @@
 
     .rule { border-top: 1px solid rgba(242,239,232,0.12); }
 
+    /* Next-show strip. Renders only when a show is actually booked. */
+    .next-show {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.25rem;
+      padding: 0.9rem 1.25rem;
+      margin-bottom: 2.25rem;
+      border: 1px solid rgba(242,239,232,0.18);
+      border-radius: 6px;
+      background: rgba(14,36,23,0.55);
+      backdrop-filter: blur(6px);
+    }
+    .next-show__label {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 0.625rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #FFCA57;
+    }
+    .next-show__detail {
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 0.9375rem;
+      color: #F2EFE8;
+      margin-right: auto;
+    }
+
     /* Track list */
     .track-row {
       border-top: 1px solid rgba(242,239,232,0.12);
@@ -281,15 +308,25 @@
   <!-- Hero -->
   <section id="hero" aria-label="Hero">
     <h1 class="sr-only">The Weeds</h1>
-    <div class="max-w-[1100px] mx-auto px-6 pb-16 md:pb-24 w-full">
-      <div class="max-w-xl">
-        <p class="hero-eyebrow text-[11px] tracking-[3px] uppercase font-body mb-6" style="color:#FFCA57;">Carmel, California &nbsp;&middot;&nbsp; Celtic Folk</p>
-        <p class="hero-sub text-base md:text-lg leading-relaxed mb-8" style="color:#F2EFE8;">
-          Fiddle, harp, and mandolin. Traditional Irish melodies woven with original compositions.
+    <div class="max-w-[1180px] mx-auto px-6 pb-14 md:pb-20 w-full">
+      <div class="max-w-2xl">
+        <p class="hero-eyebrow eyebrow mb-6">Irish Tradition &nbsp;&middot;&nbsp; Original Arrangements</p>
+
+        <p class="hero-title font-heading text-cream text-4xl md:text-6xl leading-[1.08] mb-5">
+          Traditional tunes,<br>modern hands.
         </p>
+
+        <p class="hero-sub text-base md:text-lg leading-relaxed mb-9 text-cream/80">
+          Fiddle, harp, and mandolin. Driving Irish jigs and reels, original
+          compositions, and arrangements that carry the tradition somewhere new.
+        </p>
+
+        <!-- Populated by site.js from the gig sheet; stays empty when nothing is booked. -->
+        <div id="hero-next-show"></div>
+
         <div class="hero-ctas flex flex-wrap gap-4">
-          <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-primary">Listen to Supernatural</a>
-          <a href="#about" class="btn-outline">Our Story</a>
+          <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-outline">Listen to Supernatural</a>
+          <a href="#video" class="btn-outline">Watch the Video</a>
         </div>
       </div>
     </div>

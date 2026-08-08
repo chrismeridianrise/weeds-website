@@ -11,9 +11,10 @@ window.addEventListener('scroll', () => {
 
 // Hero entrance
 if (!noMotion) {
-  gsap.set(['.hero-eyebrow', '.hero-sub', '.hero-ctas'], { opacity: 0, y: 18 });
+  gsap.set(['.hero-eyebrow', '.hero-title', '.hero-sub', '.hero-ctas'], { opacity: 0, y: 18 });
   gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 })
     .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.5 }, 0)
+    .to('.hero-title',   { opacity: 1, y: 0, duration: 0.5 }, 0.15)
     .to('.hero-sub',     { opacity: 1, y: 0, duration: 0.55 }, 0.25)
     .to('.hero-ctas',    { opacity: 1, y: 0, duration: 0.5 },  0.45);
 }
@@ -108,6 +109,8 @@ async function loadShows() {
       };
     }).filter(r => r.date && r.venue);
 
+    renderNextShow(rows);
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -152,3 +155,39 @@ async function loadShows() {
   }
 }
 loadShows();
+
+/** Escape sheet-supplied text before it reaches innerHTML. */
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+const SHOWS_FORMAT = { month: 'short', day: 'numeric', year: 'numeric' };
+const formatShowDate = d => d.toLocaleDateString('en-US', SHOWS_FORMAT);
+
+/**
+ * The hero strip is the band's top-priority element, but an empty one is worse
+ * than none — so when nothing is upcoming we leave the container empty rather
+ * than rendering an empty state. The Shows section carries that message instead.
+ */
+function renderNextShow(rows) {
+  const el = document.getElementById('hero-next-show');
+  if (!el) return;
+
+  const show = nextShow(rows, new Date());
+  if (!show) return;
+
+  const where = show.city
+    ? `${escapeHtml(show.venue)} · ${escapeHtml(show.city)}`
+    : escapeHtml(show.venue);
+
+  el.innerHTML = `
+    <div class="next-show">
+      <span class="next-show__label">Next Show</span>
+      <span class="next-show__detail">${formatShowDate(show.date)} &middot; ${where}</span>
+      ${hasTicketLink(show)
+        ? `<a href="${escapeHtml(show.link)}" target="_blank" rel="noopener" class="btn-primary">Tickets</a>`
+        : ''}
+    </div>`;
+}
