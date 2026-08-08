@@ -199,6 +199,39 @@
     }
     .member-photo:hover img { transform: scale(1.04); }
 
+    /* Bio disclosure. <details> so it works with JS disabled and is a11y-correct. */
+    .bio > summary {
+      list-style: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.85rem;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #FFCA57;
+      transition: color 0.18s ease;
+    }
+    .bio > summary::-webkit-details-marker { display: none; }
+    .bio > summary:hover { color: #DB6F3D; }
+    .bio > summary:focus-visible { outline: 2px solid #FFCA57; outline-offset: 3px; border-radius: 2px; }
+    .bio > summary::after {
+      content: '';
+      width: 6px; height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: translateY(-2px) rotate(45deg);
+      transition: transform 0.2s ease;
+    }
+    .bio[open] > summary::after { transform: translateY(1px) rotate(-135deg); }
+    .bio > summary .bio__less { display: none; }
+    .bio[open] > summary .bio__more { display: none; }
+    .bio[open] > summary .bio__less { display: inline; }
+    .bio__body { margin-top: 0.85rem; }
+    .bio__body p + p { margin-top: 0.75rem; }
+
     /* Focus styles */
     a:focus-visible,
     button:focus-visible {
@@ -527,57 +560,140 @@
   <!-- Atmospheric photo divider (decorative) -->
   <div class="photo-divider" aria-hidden="true" style="background-image: url('assets/images/barn-divider.jpg'); background-position: center 55%;"></div>
 
-<!-- About -->
-  <section id="about" class="bg-surface py-20 md:py-28">
-    <div class="max-w-[1100px] mx-auto px-6">
+<!-- The Trio -->
+<section id="trio" class="bg-surface py-20 md:py-28">
+  <div class="max-w-[1180px] mx-auto px-6">
 
-      <!-- Section header -->
-      <div class="max-w-2xl mb-16">
-        <p class="reveal text-accent text-[11px] tracking-[3px] uppercase font-body mb-5">The Band</p>
-        <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2] mb-6">
-          A family trio rooted in tradition.
-        </h2>
-        <p class="reveal text-muted text-sm leading-relaxed mb-4">
-          The Weeds are John, Tyler, and Evan Weed, a father and two sons from Carmel, California. They grew up traveling together to folk festivals and sessions across the West Coast, building a shared musical language across fiddle, harp, mandolin, guitar, tenor banjo, piano, and melodica.
-        </p>
-        <p class="reveal text-muted text-sm leading-relaxed">
-          Their music moves between traditional Irish tunes and original compositions, always with the same ease, as if there is no line between the two.
-        </p>
-      </div>
-
-      <!-- Member portraits -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
-
-        <div class="reveal">
-          <div class="member-photo">
-            <img src="assets/images/member-john.jpg" alt="John Weed playing fiddle" loading="lazy" style="object-position: center 15%;">
-          </div>
-          <h3 class="font-heading text-cream text-xl mb-1">John Weed</h3>
-          <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Fiddle</p>
-          <p class="text-muted text-sm leading-relaxed">The anchor of the trio, John's fiddle carries the Irish tradition with warmth and authority. He plays a violin by James Wimmer.</p>
-        </div>
-
-        <div class="reveal">
-          <div class="member-photo">
-            <img src="assets/images/member-evan-2.png" alt="Evan Weed playing Celtic harp" loading="lazy" style="object-position: center 20%;">
-          </div>
-          <h3 class="font-heading text-cream text-xl mb-1">Evan Weed</h3>
-          <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Celtic Harp &middot; Piano &middot; Melodica</p>
-          <p class="text-muted text-sm leading-relaxed">Evan's harp gives the trio its distinctive voice: resonant, unexpected, and grounding. He moves fluidly between harp, piano, and melodica.</p>
-        </div>
-
-        <div class="reveal">
-          <div class="member-photo">
-            <img src="assets/images/member-tyler.jpg" alt="Tyler Weed playing mandolin" loading="lazy" style="object-position: center 15%;">
-          </div>
-          <h3 class="font-heading text-cream text-xl mb-1">Tyler Weed</h3>
-          <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Mandolin &middot; Guitar &middot; Tenor Banjo</p>
-          <p class="text-muted text-sm leading-relaxed">Tyler drives the rhythm and melody in equal measure, moving across mandolin, guitar, and tenor banjo as the music demands.</p>
-        </div>
-
-      </div>
+    <div class="max-w-2xl mb-16">
+      <p class="reveal eyebrow mb-5">The Trio</p>
+      <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2]">
+        Three players, one shared language.
+      </h2>
     </div>
-  </section>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+
+      <div class="reveal">
+        <div class="member-photo">
+          <img src="assets/images/member-john.jpg" alt="John Weed playing fiddle" loading="lazy" style="object-position: center 15%;">
+        </div>
+        <h3 class="font-heading text-cream text-2xl mb-1">John Weed</h3>
+        <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Fiddle</p>
+        <p class="text-muted text-sm leading-relaxed">
+          Thirty years across Irish, Scottish, Swedish, and Old-Time fiddle, with a
+          musical education that began in a long series of Irish sessions.
+        </p>
+        <details class="bio">
+          <summary><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
+          <div class="bio__body text-muted text-sm leading-relaxed">
+            <p>
+              John Weed, fiddler for The Weeds, Molly&rsquo;s Revenge and New World
+              String Project, has spent the last 30 years immersed in various fiddle
+              styles. With an affinity for folk traditions, John&rsquo;s exploration
+              has emphasized Irish, Scottish, Swedish, and Old-Time fiddle.
+            </p>
+            <p>
+              While he holds a bachelor&rsquo;s degree of music from CSU Chico, the
+              musical education that charted his path began through a long series of
+              Irish sessions. There, he learned the nuance of aural passing of
+              melodies and the tradition of conversing in a deeply musical manner.
+              John&rsquo;s passion for the vital expressiveness of the session lead
+              to performing across the United States and internationally.
+            </p>
+            <p>
+              In addition to being a full time performer and instructor, John is
+              currently on faculty at Palenke Arts, a multicultural arts
+              organization in Seaside, California.
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <div class="reveal">
+        <div class="member-photo">
+          <img src="assets/images/member-evan-2.png" alt="Evan Weed playing Celtic harp" loading="lazy" style="object-position: center 20%;">
+        </div>
+        <h3 class="font-heading text-cream text-2xl mb-1">Evan Weed</h3>
+        <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Celtic Harp &middot; Piano &middot; Melodica</p>
+        <p class="text-muted text-sm leading-relaxed">
+          A 2025 National YoungArts winner in composition and jazz piano, and the
+          third eighth grader in four decades to win a seat in the SFJazz High
+          School All Star Big Band.
+        </p>
+        <details class="bio">
+          <summary><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
+          <div class="bio__body text-muted text-sm leading-relaxed">
+            <p>
+              Evan Weed is the youngest in the Weeds musical clan. Like Tyler, Evan
+              grew up on the road, accompanying his father&rsquo;s touring bands to
+              festivals, performing arts centers, house concerts, and many fiddle
+              camps. During the pandemic, Evan completely immersed himself in a
+              world of practice on piano, Celtic harp, jazz drumming, and Latin
+              percussion.
+            </p>
+            <p>
+              In addition to playing harp and melodica in John Weed&rsquo;s Celtic
+              Teen Band &ldquo;The McMonarchs&rdquo;, Evan worked tirelessly on
+              piano. Evan won a position in the nationally ranked SFJazz High School
+              All Star Big Band, becoming only the third eighth grader in four
+              decades to be selected. Evan was later presented SFJazz Education
+              Award spring 2024, voted on by his peers and directors for superior
+              dedication, attitude, and musicianship.
+            </p>
+            <p>
+              Evan&rsquo;s original composition, &ldquo;Ask The Professor&rdquo;,
+              was recently featured in the SFJazz winter concert after Evan arranged
+              and orchestrated for the 19 piece big-band. Evan recently became a
+              2025 National Young Arts Winner in the categories of composition and
+              jazz piano.
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <div class="reveal">
+        <div class="member-photo">
+          <img src="assets/images/member-tyler.jpg" alt="Tyler Weed playing mandolin" loading="lazy" style="object-position: center 15%;">
+        </div>
+        <h3 class="font-heading text-cream text-2xl mb-1">Tyler Weed</h3>
+        <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Mandolin &middot; Tenor Banjo &middot; Guitar</p>
+        <p class="text-muted text-sm leading-relaxed">
+          Equally at home in old-world fiddle styles and swing accompaniment, with
+          a tenor banjo style built on ornate, percussive triplets over a driving
+          groove.
+        </p>
+        <details class="bio">
+          <summary><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
+          <div class="bio__body text-muted text-sm leading-relaxed">
+            <p>
+              Tyler Weed was raised in a musical family. His journey began on guitar
+              which quickly led to earning money backing his father on fiddle. He
+              then discovered flat-picking melodies while also developing a passion
+              for jazz. This allowed him to be equally comfortable playing in the
+              old-world fiddle styles as well as using swing-accompaniment on Irish
+              melodies. World Strides Heritage Festival presented Tyler with
+              first-place Maestro Solo Guitar award in Anaheim, Ca. 2022.
+            </p>
+            <p>
+              Heavily influenced by Bay Area mandolin great Marla Fibish, Tyler
+              developed nuanced traditional Irish tunes on mandolin &mdash; picking
+              patterns for the different dance tunes, tone projection, and styling,
+              which continues in his playing today. Tyler represented the next
+              generation of mandolin players at his performance at 2023 San
+              Francisco Instrumental Festival of Mandolins.
+            </p>
+            <p>
+              He has since journeyed into the world of tenor banjo. His banjo style
+              can be characterized by ornate, percussive triplet stylings with a
+              driving, yet hypnotic groove.
+            </p>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+</section>
 
   <!-- Shows -->
   <section id="shows" class="bg-ground py-20 md:py-28 border-b border-hairline">
