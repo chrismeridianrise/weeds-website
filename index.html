@@ -232,6 +232,23 @@
     .bio__body { margin-top: 0.85rem; }
     .bio__body p + p { margin-top: 0.75rem; }
 
+    /* Mailing list field */
+    .field {
+      flex: 1 1 240px;
+      min-width: 0;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid rgba(242,239,232,0.32);
+      padding: 0.75rem 0.25rem;
+      color: #F2EFE8;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 0.9375rem;
+      border-radius: 0;
+    }
+    .field::placeholder { color: rgba(242,239,232,0.45); }
+    .field:focus { outline: none; border-bottom-color: #FFCA57; }
+    .field:focus-visible { outline: 2px solid #FFCA57; outline-offset: 4px; border-radius: 2px; }
+
     /* Focus styles */
     a:focus-visible,
     button:focus-visible {
@@ -722,44 +739,65 @@
     </div>
   </section>
 
-  <!-- Contact / Connect -->
-  <section id="contact" class="bg-surface py-20 md:py-28">
-    <div class="max-w-[1100px] mx-auto px-6">
-      <div class="flex flex-col md:flex-row gap-14 md:gap-20 md:items-end">
+  <!-- Connect -->
+  <section id="connect" class="bg-surface py-20 md:py-28">
+    <div class="max-w-[1180px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row gap-16 md:gap-20">
 
         <div class="md:w-1/2">
-          <p class="reveal text-[11px] tracking-[3px] uppercase font-body mb-4" style="color:rgba(242,239,232,0.62);">Get in Touch</p>
+          <p class="reveal eyebrow mb-5">Mailing List</p>
           <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2] mb-5">
-            Bookings &amp; inquiries.
+            Hear about shows first.
           </h2>
-          <p class="reveal text-sm leading-relaxed mb-8" style="color:rgba(242,239,232,0.62);">
-            Interested in having The Weeds perform? Reach out by email and they will get back to you.
+          <p class="reveal text-muted text-sm leading-relaxed mb-8">
+            Tour dates, new recordings, and the occasional tune. No more than a few
+            times a year.
           </p>
-          <div class="reveal flex flex-col gap-4">
-            <a href="mailto:info@weedstrio.com" class="btn-primary self-start">Email the Band</a>
-            <p class="text-xs" style="color:rgba(242,239,232,0.62);">Or write to <span style="color:#F2EFE8;">info@weedstrio.com</span></p>
-          </div>
+
+          <form id="mailing-list-form" name="mailing-list" method="POST"
+                data-netlify="true" netlify-honeypot="bot-field"
+                class="reveal flex flex-wrap items-end gap-4">
+            <input type="hidden" name="form-name" value="mailing-list">
+            <p class="hidden" aria-hidden="true">
+              <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+            </p>
+            <label for="ml-email" class="sr-only">Email address</label>
+            <input id="ml-email" class="field" type="email" name="email" required
+                   autocomplete="email" placeholder="Email address">
+            <button type="submit" class="btn-primary">Sign Up</button>
+          </form>
+          <p id="mailing-list-status" role="status" aria-live="polite" class="text-sm mt-4"></p>
         </div>
 
         <div class="md:w-1/2">
-          <p class="reveal text-[11px] tracking-[3px] uppercase font-body mb-5" style="color:rgba(242,239,232,0.62);">Follow Along</p>
-          <div class="reveal flex flex-col gap-4">
-            <a href="https://www.instagram.com/weedstrio" target="_blank" rel="noopener"
-               class="flex items-center gap-4 group" style="color:rgba(242,239,232,0.62);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-              </svg>
-              <span class="text-sm group-hover:text-cream transition-colors">@weedstrio</span>
-            </a>
-            <a href="https://weedstrio.bandcamp.com" target="_blank" rel="noopener"
-               class="flex items-center gap-4 group" style="color:rgba(242,239,232,0.62);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
-              </svg>
-              <span class="text-sm group-hover:text-cream transition-colors">weedstrio.bandcamp.com</span>
-            </a>
+          <p class="reveal eyebrow mb-5">Bookings</p>
+          <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2] mb-5">
+            Bring The Weeds to your stage.
+          </h2>
+          <p class="reveal text-muted text-sm leading-relaxed mb-8">
+            Concerts, festivals, house concerts, and workshops. Reach out and the
+            band will get back to you.
+          </p>
+
+          <div class="reveal flex flex-col gap-6">
+            <a href="mailto:info@weedsmusic.com" class="btn-outline self-start">Email the Band</a>
+
+            <div class="flex items-center gap-6 pt-2">
+              <a href="https://www.instagram.com/weedsmusic" target="_blank" rel="noopener"
+                 class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Instagram">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+              <a href="https://weedsmusic.bandcamp.com" target="_blank" rel="noopener"
+                 class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Bandcamp">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
 

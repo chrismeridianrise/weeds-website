@@ -180,3 +180,37 @@ document.querySelectorAll('.video-facade').forEach(facade => {
     iframe.focus();
   }, { once: true });
 });
+
+/**
+ * Netlify accepts a urlencoded POST to any path on the site. Submitting via
+ * fetch keeps the visitor on the page instead of bouncing to Netlify's default
+ * success screen. The plain form POST remains the no-JS fallback.
+ */
+const mlForm   = document.getElementById('mailing-list-form');
+const mlStatus = document.getElementById('mailing-list-status');
+
+mlForm?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const submit = mlForm.querySelector('button[type="submit"]');
+  submit.disabled = true;
+  mlStatus.style.color = 'rgba(242,239,232,0.62)';
+  mlStatus.textContent = 'Signing up…';
+
+  try {
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(mlForm)).toString(),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    mlForm.hidden = true;
+    mlStatus.style.color = '#FFCA57';
+    mlStatus.textContent = 'Thanks — you’re on the list.';
+  } catch (err) {
+    submit.disabled = false;
+    mlStatus.style.color = '#DB6F3D';
+    mlStatus.textContent = 'Something went wrong. Please email info@weedsmusic.com instead.';
+    console.error('Mailing list signup failed:', err);
+  }
+});
