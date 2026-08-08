@@ -39,7 +39,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    html { scroll-behavior: smooth; scroll-padding-top: 68px; }
+    html { scroll-behavior: smooth; scroll-padding-top: 72px; }
     body { -webkit-font-smoothing: antialiased; }
 
     /* Nav */
@@ -202,22 +202,45 @@
 
   <!-- Navigation -->
   <nav id="main-nav" aria-label="Main navigation" class="fixed top-0 left-0 right-0 z-50 bg-transparent">
-    <div class="max-w-[1100px] mx-auto flex justify-between items-center h-[68px] px-6">
-      <a href="#" class="font-body text-cream text-[11px] tracking-[3px] uppercase font-medium leading-none" style="text-shadow: 0 1px 6px rgba(0,0,0,0.5);">
-        The Weeds
+    <div class="max-w-[1180px] mx-auto flex justify-between items-center h-[72px] px-6">
+
+      <a href="#" class="flex items-center text-cream hover:text-accent transition-colors" aria-label="The Weeds — home">
+        <span class="font-body text-[13px] tracking-[3px] uppercase font-medium leading-none">The Weeds</span>
       </a>
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#music"   class="text-sm text-cream/80 hover:text-cream transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Music</a>
-        <a href="#about"   class="text-sm text-cream/80 hover:text-cream transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">About</a>
-        <a href="#shows"   class="text-sm text-cream/80 hover:text-cream transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Shows</a>
-        <a href="#contact" class="text-sm text-cream/80 hover:text-cream transition-colors tracking-wide" style="text-shadow:0 1px 4px rgba(0,0,0,0.4);">Contact</a>
-        <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-primary ml-2">Listen on Bandcamp</a>
+
+      <div class="hidden md:flex items-center gap-7">
+        <a href="#story"   class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Story</a>
+        <a href="#music"   class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Music</a>
+        <a href="#shows"   class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Shows</a>
+        <a href="#connect" class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Contact</a>
+
+        <span class="w-px h-4 bg-hairline" aria-hidden="true"></span>
+
+        <div class="flex items-center gap-4">
+          <a href="https://www.instagram.com/weedsmusic" target="_blank" rel="noopener"
+             class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Instagram">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://weedsmusic.bandcamp.com" target="_blank" rel="noopener"
+             class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Bandcamp">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
+            </svg>
+          </a>
+        </div>
+
+        <a href="#shows" class="btn-primary ml-1">Tickets</a>
       </div>
+
       <button id="menu-toggle" class="md:hidden p-2 -mr-2" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
         <svg width="22" height="14" viewBox="0 0 22 14" fill="none" aria-hidden="true">
-          <rect width="22" height="1.5" rx="0.75" fill="white"/>
-          <rect y="6.25" width="22" height="1.5" rx="0.75" fill="white"/>
-          <rect y="12.5" width="22" height="1.5" rx="0.75" fill="white"/>
+          <rect width="22" height="1.5" rx="0.75" fill="#F2EFE8"/>
+          <rect y="6.25" width="22" height="1.5" rx="0.75" fill="#F2EFE8"/>
+          <rect y="12.5" width="22" height="1.5" rx="0.75" fill="#F2EFE8"/>
         </svg>
       </button>
     </div>
@@ -226,11 +249,28 @@
   <!-- Mobile menu -->
   <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" class="fixed inset-0 z-40 bg-ground flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true">
     <button id="menu-close" class="absolute top-5 right-6 text-cream/40 hover:text-cream text-3xl leading-none" aria-label="Close menu">&times;</button>
-    <a href="#music"   class="mobile-nav-link font-heading text-2xl text-cream/80 hover:text-cream transition-colors italic">Music</a>
-    <a href="#about"   class="mobile-nav-link font-heading text-2xl text-cream/80 hover:text-cream transition-colors italic">About</a>
-    <a href="#shows"   class="mobile-nav-link font-heading text-2xl text-cream/80 hover:text-cream transition-colors italic">Shows</a>
-    <a href="#contact" class="mobile-nav-link font-heading text-2xl text-cream/80 hover:text-cream transition-colors italic">Contact</a>
-    <a href="https://weedstrio.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="mobile-nav-link mt-2 btn-primary">Listen on Bandcamp</a>
+    <a href="#story"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Story</a>
+    <a href="#music"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Music</a>
+    <a href="#shows"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Shows</a>
+    <a href="#connect" class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Contact</a>
+    <a href="#shows"   class="mobile-nav-link mt-2 btn-primary">Tickets</a>
+
+    <div class="flex items-center gap-6 mt-6">
+      <a href="https://www.instagram.com/weedsmusic" target="_blank" rel="noopener"
+         class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Instagram">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="https://weedsmusic.bandcamp.com" target="_blank" rel="noopener"
+         class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Bandcamp">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 
   <main id="main-content">
@@ -487,23 +527,8 @@
 
     // Nav: swap to opaque on scroll
     const nav = document.getElementById('main-nav');
-    const navLinks = nav.querySelectorAll('a:not(.btn-primary)');
     window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY > 60;
-      nav.classList.toggle('scrolled', scrolled);
-      navLinks.forEach(a => {
-        a.style.color = scrolled ? '' : '';
-        a.style.textShadow = scrolled ? 'none' : '0 1px 4px rgba(0,0,0,0.4)';
-      });
-      const wordmark = nav.querySelector('a:first-child');
-      wordmark.style.color = scrolled ? '#F2EFE8' : 'white';
-      wordmark.style.textShadow = scrolled ? 'none' : '0 1px 6px rgba(0,0,0,0.5)';
-      navLinks.forEach(a => {
-        if (!a.classList.contains('btn-primary')) {
-          a.style.color = scrolled ? 'rgba(242,239,232,0.62)' : '#F2EFE8';
-          a.style.textShadow = scrolled ? 'none' : '0 1px 4px rgba(0,0,0,0.4)';
-        }
-      });
+      nav.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
 
     // Hero entrance
