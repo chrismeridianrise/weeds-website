@@ -1,6 +1,10 @@
 import { parseGvizResponse, partitionShows, nextShow, hasTicketLink } from './shows.js';
 
-gsap.registerPlugin(ScrollTrigger);
+// Both CDN scripts load before this module, but a blocked/failed CDN request
+// must not take nav, shows, video, and the mailing-list form down with it —
+// .reveal has no default opacity:0, so skipping animation just skips animation.
+const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Nav: swap to opaque on scroll
@@ -10,7 +14,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // Hero entrance
-if (!noMotion) {
+if (!noMotion && hasGsap) {
   gsap.set(['.hero-eyebrow', '.hero-title', '.hero-sub', '.hero-ctas'], { opacity: 0, y: 18 });
   gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 })
     .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.5 }, 0)
@@ -20,7 +24,7 @@ if (!noMotion) {
 }
 
 // Scroll reveals
-if (!noMotion) {
+if (!noMotion && hasGsap) {
   gsap.set('.reveal', { opacity: 0, y: 14 });
   ScrollTrigger.batch('.reveal', {
     start: 'top 90%',
@@ -52,7 +56,20 @@ function closeMenu() {
 menuToggle.addEventListener('click', openMenu);
 menuClose.addEventListener('click', closeMenu);
 document.querySelectorAll('.mobile-nav-link').forEach(l => l.addEventListener('click', closeMenu));
-mobileMenu.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+mobileMenu.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeMenu(); return; }
+  if (e.key !== 'Tab') return;
+  const focusables = mobileMenu.querySelectorAll('a, button');
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+});
 
 // Shows: fetch gig list from Google Sheets and render Upcoming / Previous Engagements
 const SHEET_ID = '16qA-eK6T4PcSlP8tMrWN3BqQO4AXeQktJm9S2ReyTlc';
@@ -121,7 +138,7 @@ async function loadShows() {
         </p>`).join('');
     }
 
-    if (!noMotion) {
+    if (!noMotion && hasGsap) {
       gsap.set('#upcoming-shows-list .reveal, #past-shows-list .reveal', { opacity: 0, y: 14 });
       ScrollTrigger.batch('#upcoming-shows-list .reveal, #past-shows-list .reveal', {
         start: 'top 90%',

@@ -8,12 +8,15 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# Images are effectively content-addressed by name here — they change by being
-# replaced under a new filename — so a year of immutable caching is safe.
+# Images are NOT hashed or renamed on edit (no build step) — the c661d1b
+# recompression pass replaced several images' bytes under their existing
+# filenames, which `immutable` caching would have hidden from returning
+# visitors for up to a year. A day of caching plus revalidation keeps most of
+# the win without that risk.
 [[headers]]
   for = "/assets/images/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=86400, must-revalidate"
 
 # The JS is NOT hashed (there is no build step), and `immutable` suppresses
 # revalidation even on reload. Under the old blanket /assets/* rule the first
