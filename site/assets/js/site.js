@@ -200,7 +200,7 @@ document.querySelectorAll('.video-facade').forEach(facade => {
 
     const iframe = document.createElement('iframe');
     iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`;
-    iframe.title = 'The Weeds, live';
+    iframe.title = 'The Weeds perform Castle Kelly';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
     iframe.allowFullscreen = true;
     facade.replaceChildren(iframe);
@@ -209,9 +209,11 @@ document.querySelectorAll('.video-facade').forEach(facade => {
 });
 
 /**
- * Netlify accepts a urlencoded POST to any path on the site. Submitting via
- * fetch keeps the visitor on the page instead of bouncing to Netlify's default
- * success screen. The plain form POST remains the no-JS fallback.
+ * The mailing list writes straight to the weed-gigs Sheet via an Apps Script
+ * web app (doPost appends a row to the "Mailing List" tab). Submitting via
+ * fetch keeps the visitor on the page instead of bouncing to Google's own
+ * response page. The endpoint URL lives on the form's `action` (also the
+ * no-JS fallback target) so it's defined in exactly one place.
  */
 const mlForm   = document.getElementById('mailing-list-form');
 const mlStatus = document.getElementById('mailing-list-status');
@@ -227,12 +229,13 @@ if (mlStatus) mlForm?.addEventListener('submit', async e => {
   mlStatus.textContent = 'Signing up…';
 
   try {
-    const res = await fetch('/', {
+    const res = await fetch(mlForm.action, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(mlForm)).toString(),
     });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
     mlForm.hidden = true;
     mlStatus.style.color = '#FFCA57';
@@ -240,7 +243,9 @@ if (mlStatus) mlForm?.addEventListener('submit', async e => {
   } catch (err) {
     submit.disabled = false;
     mlStatus.style.color = '#E37B42';
-    mlStatus.textContent = 'Something went wrong. Please email info@weedsmusic.com instead.';
+    mlStatus.textContent = err.message === 'invalid email'
+      ? 'That doesn’t look like a valid email address — mind double-checking it?'
+      : 'Something went wrong. Please email realjweed@hotmail.com instead.';
     console.error('Mailing list signup failed:', err);
   }
 });
