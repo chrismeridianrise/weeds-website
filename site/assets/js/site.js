@@ -57,6 +57,15 @@ mobileMenu.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(
 // Shows: fetch gig list from Google Sheets and render Upcoming / Previous Engagements
 const SHEET_ID = '16qA-eK6T4PcSlP8tMrWN3BqQO4AXeQktJm9S2ReyTlc';
 
+// Declared above loadShows()'s call site on purpose. `const` is not hoisted, so
+// while these lived below it the code only worked because `await fetch` yielded
+// and let module evaluation finish before anything dereferenced them. Removing
+// the await, or hoisting the render, would have thrown a TDZ ReferenceError that
+// loadShows()'s own catch would swallow into the empty state — presenting as
+// "shows silently stopped working" with the cause hidden.
+const SHOWS_FORMAT = { month: 'short', day: 'numeric', year: 'numeric' };
+const formatShowDate = d => d.toLocaleDateString('en-US', SHOWS_FORMAT);
+
 function showRow(r) {
   const where = r.city
     ? `${escapeHtml(r.venue)} &middot; ${escapeHtml(r.city)}`
@@ -88,6 +97,10 @@ async function loadShows() {
     const res = await fetch(
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1`
     );
+    // Without this, a 401 (sheet un-shared) or 404 yields non-JSON,
+    // parseGvizResponse returns [], and the page shows "No shows currently
+    // scheduled" — indistinguishable from an empty sheet, with nothing logged.
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const rows = parseGvizResponse(await res.text());
 
     renderNextShow(rows);
@@ -129,9 +142,6 @@ function escapeHtml(str) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[c]));
 }
-
-const SHOWS_FORMAT = { month: 'short', day: 'numeric', year: 'numeric' };
-const formatShowDate = d => d.toLocaleDateString('en-US', SHOWS_FORMAT);
 
 /**
  * The hero strip is the band's top-priority element, but an empty one is worse
@@ -189,7 +199,10 @@ document.querySelectorAll('.video-facade').forEach(facade => {
 const mlForm   = document.getElementById('mailing-list-form');
 const mlStatus = document.getElementById('mailing-list-status');
 
-mlForm?.addEventListener('submit', async e => {
+// Guarded on mlStatus too: every mlStatus use below is an assignment target, and
+// `mlStatus?.style.color = …` is a SyntaxError, so the null-safety has to live
+// here rather than at each deref. Neither element is optional today.
+if (mlStatus) mlForm?.addEventListener('submit', async e => {
   e.preventDefault();
   const submit = mlForm.querySelector('button[type="submit"]');
   submit.disabled = true;

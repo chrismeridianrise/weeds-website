@@ -53,7 +53,14 @@
       box-shadow: 0 1px 0 rgba(242,239,232,0.12);
     }
     /* Before the nav goes opaque, text/icons sit directly over the hero photo.
-       A shadow keeps them AA-legible against light gaps in the canopy. */
+       A shadow keeps the text AA-legible against light gaps in the canopy, but
+       text-shadow does nothing for SVG geometry — the hamburger button and the
+       social icons got zero mitigation from it. The scrim darkens only the 72px
+       nav band, leaving the hero photograph below it untouched, and brings the
+       wordmark, links, hamburger and icons all to measurable AA. */
+    #main-nav:not(.scrolled) {
+      background: linear-gradient(to bottom, rgba(14,36,23,0.8), rgba(14,36,23,0));
+    }
     #main-nav:not(.scrolled) a { text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
 
     /* Hero */
@@ -177,7 +184,11 @@
     .track-row:last-child { border-bottom: 1px solid rgba(242,239,232,0.12); }
 
     /* Mobile menu */
-    #mobile-menu.open { opacity: 1; pointer-events: auto; }
+    /* `visibility` is what actually pulls the closed overlay out of the tab
+       order — opacity/pointer-events leave its 8 controls focusable inside an
+       aria-hidden container (axe aria-hidden-focus, WCAG 2.4.3). The fade-out
+       becomes instant as a result, which is imperceptible. */
+    #mobile-menu.open { opacity: 1; visibility: visible; pointer-events: auto; }
 
     /* Show rows */
     .show-row { border-top: 1px solid rgba(242,239,232,0.12); padding: 1.5rem 0; }
@@ -244,14 +255,20 @@
       min-width: 0;
       background: transparent;
       border: 0;
-      border-bottom: 1px solid rgba(242,239,232,0.32);
+      /* 0.45 over `surface` is 3.70:1 — the border is this control's only
+         visual boundary, so WCAG 1.4.11 wants 3:1. At 0.32 it was 2.57:1. */
+      border-bottom: 1px solid rgba(242,239,232,0.45);
       padding: 0.75rem 0.25rem;
       color: #F2EFE8;
       font-family: Inter, system-ui, sans-serif;
       font-size: 0.9375rem;
       border-radius: 0;
     }
-    .field::placeholder { color: rgba(242,239,232,0.45); }
+    /* The field's <label> is sr-only, so for a sighted user the placeholder IS
+       the label and the 4.5:1 body-text minimum applies — the usual "placeholders
+       are exempt" reasoning does not hold. `muted` (0.62) is 5.67:1 over
+       `surface`; the old 0.45 was 3.70:1. */
+    .field::placeholder { color: rgba(242,239,232,0.62); }
     .field:focus { outline: none; border-bottom-color: #FFCA57; }
     .field:focus-visible { outline: 2px solid #FFCA57; outline-offset: 4px; border-radius: 2px; }
 
@@ -354,7 +371,7 @@
               <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
             </svg>
           </a>
-          <a href="https://weedsmusic.bandcamp.com" target="_blank" rel="noopener"
+          <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
              class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Bandcamp">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
@@ -376,7 +393,7 @@
   </nav>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" class="fixed inset-0 z-40 bg-ground flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300" aria-hidden="true">
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" class="fixed inset-0 z-[60] bg-ground flex flex-col items-center justify-center gap-8 overflow-y-auto py-16 opacity-0 invisible pointer-events-none transition-opacity duration-300" aria-hidden="true">
     <button id="menu-close" class="absolute top-5 right-6 text-cream/40 hover:text-cream text-3xl leading-none" aria-label="Close menu">&times;</button>
     <a href="#story"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Story</a>
     <a href="#music"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Music</a>
@@ -393,7 +410,7 @@
           <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
         </svg>
       </a>
-      <a href="https://weedsmusic.bandcamp.com" target="_blank" rel="noopener"
+      <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
          class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Bandcamp">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
@@ -607,7 +624,7 @@
           musical education that began in a long series of Irish sessions.
         </p>
         <details class="bio">
-          <summary><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
+          <summary aria-label="Read more about John Weed"><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
           <div class="bio__body text-muted text-sm leading-relaxed">
             <p>
               John Weed, fiddler for The Weeds, Molly&rsquo;s Revenge and New World
@@ -634,7 +651,7 @@
 
       <div class="reveal">
         <div class="member-photo">
-          <img src="assets/images/member-evan-2.png" alt="Evan Weed playing Celtic harp" loading="lazy" style="object-position: center 20%;">
+          <img src="assets/images/member-evan-2.jpg" alt="Evan Weed playing Celtic harp" loading="lazy" style="object-position: center 20%;">
         </div>
         <h3 class="font-heading text-cream text-2xl mb-1">Evan Weed</h3>
         <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Celtic Harp &middot; Piano &middot; Melodica</p>
@@ -644,7 +661,7 @@
           School All Star Big Band.
         </p>
         <details class="bio">
-          <summary><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
+          <summary aria-label="Read more about Evan Weed"><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
           <div class="bio__body text-muted text-sm leading-relaxed">
             <p>
               Evan Weed is the youngest in the Weeds musical clan. Like Tyler, Evan
@@ -686,7 +703,7 @@
           groove.
         </p>
         <details class="bio">
-          <summary><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
+          <summary aria-label="Read more about Tyler Weed"><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
           <div class="bio__body text-muted text-sm leading-relaxed">
             <p>
               Tyler Weed was raised in a musical family. His journey began on guitar
@@ -797,7 +814,7 @@
                   <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
                 </svg>
               </a>
-              <a href="https://weedsmusic.bandcamp.com" target="_blank" rel="noopener"
+              <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
                  class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Bandcamp">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
@@ -818,7 +835,7 @@
     <div class="max-w-[1180px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-muted">
       <span class="font-heading italic text-sm text-cream/70">The Weeds</span>
       <span>&copy; 2026 The Weeds</span>
-      <a href="https://weedsmusic.bandcamp.com" target="_blank" rel="noopener"
+      <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
          class="hover:text-accent transition-colors">Bandcamp</a>
     </div>
   </footer>

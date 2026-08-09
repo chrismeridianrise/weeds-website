@@ -8,10 +8,21 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Images are effectively content-addressed by name here — they change by being
+# replaced under a new filename — so a year of immutable caching is safe.
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/images/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# The JS is NOT hashed (there is no build step), and `immutable` suppresses
+# revalidation even on reload. Under the old blanket /assets/* rule the first
+# post-launch bugfix to site.js would not have reached returning visitors for up
+# to a year, while index.html's max-age=0 kept serving fresh HTML against it.
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/index.html"
