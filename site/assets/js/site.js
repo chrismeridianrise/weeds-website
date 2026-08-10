@@ -7,6 +7,10 @@ const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefin
 if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Footer copyright year, so it doesn't go stale every January.
+const copyrightYear = document.getElementById('copyright-year');
+if (copyrightYear) copyrightYear.textContent = new Date().getFullYear();
+
 // Nav: swap to opaque on scroll
 const nav = document.getElementById('main-nav');
 window.addEventListener('scroll', () => {
@@ -15,12 +19,11 @@ window.addEventListener('scroll', () => {
 
 // Hero entrance
 if (!noMotion && hasGsap) {
-  gsap.set(['.hero-eyebrow', '.hero-title', '.hero-sub', '.hero-ctas'], { opacity: 0, y: 18 });
+  gsap.set(['.hero-eyebrow', '.hero-title', '.hero-ctas'], { opacity: 0, y: 18 });
   gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 })
     .to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.5 }, 0)
     .to('.hero-title',   { opacity: 1, y: 0, duration: 0.5 }, 0.15)
-    .to('.hero-sub',     { opacity: 1, y: 0, duration: 0.55 }, 0.25)
-    .to('.hero-ctas',    { opacity: 1, y: 0, duration: 0.5 },  0.45);
+    .to('.hero-ctas',    { opacity: 1, y: 0, duration: 0.5 },  0.4);
 }
 
 // Scroll reveals

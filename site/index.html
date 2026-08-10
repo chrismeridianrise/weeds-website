@@ -375,12 +375,13 @@
     <div class="max-w-[1180px] mx-auto flex justify-between items-center h-[72px] px-6">
 
       <a href="#" class="flex items-center text-cream hover:text-accent transition-colors" aria-label="The Weeds — home">
-        <span class="font-body text-[13px] tracking-[3px] uppercase font-medium leading-none">The Weeds</span>
+        <span class="font-body text-[13px] md:text-[15px] tracking-[3px] uppercase font-medium leading-none">The Weeds</span>
       </a>
 
       <div class="hidden md:flex items-center gap-7">
         <a href="#story"   class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Story</a>
         <a href="#music"   class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Music</a>
+        <a href="#video"   class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Watch</a>
         <a href="#shows"   class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Shows</a>
         <a href="#connect" class="text-sm text-cream/80 hover:text-accent transition-colors tracking-wide">Contact</a>
 
@@ -393,6 +394,20 @@
               <rect x="2" y="2" width="20" height="20" rx="5"/>
               <circle cx="12" cy="12" r="4"/>
               <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61588720666652" target="_blank" rel="noopener"
+             class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Facebook">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M14 8h-1.5c-1.1 0-2 .9-2 2v2H9v2.2h1.5V21h2.4v-6.8H15l.3-2.2h-2.8v-1.7c0-.5.3-.8.8-.8H15z" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/channel/UCrYHmFp-sZzsJ7_Fq0NfO3A" target="_blank" rel="noopener"
+             class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on YouTube">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="4"/>
+              <path d="M10 9l6 3-6 3z" fill="currentColor" stroke="none"/>
             </svg>
           </a>
           <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
@@ -417,29 +432,46 @@
   </nav>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" class="fixed inset-0 z-[60] bg-ground flex flex-col items-center justify-center gap-8 overflow-y-auto py-16 opacity-0 invisible pointer-events-none transition-opacity duration-300" aria-hidden="true">
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" class="fixed inset-0 z-[60] bg-ground flex overflow-y-auto py-16 opacity-0 invisible pointer-events-none transition-opacity duration-300" aria-hidden="true">
     <button id="menu-close" class="absolute top-5 right-6 text-cream/40 hover:text-cream text-3xl leading-none" aria-label="Close menu">&times;</button>
-    <a href="#story"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Story</a>
-    <a href="#music"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Music</a>
-    <a href="#shows"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Shows</a>
-    <a href="#connect" class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Contact</a>
-    <a href="#shows"   class="mobile-nav-link mt-2 btn-primary">Tickets</a>
+    <div class="m-auto flex flex-col items-center gap-8">
+      <a href="#story"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Story</a>
+      <a href="#music"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Music</a>
+      <a href="#video"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Watch</a>
+      <a href="#shows"   class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Shows</a>
+      <a href="#connect" class="mobile-nav-link font-heading text-2xl text-cream/85 hover:text-accent transition-colors italic">Contact</a>
+      <a href="#shows"   class="mobile-nav-link mt-2 btn-primary">Tickets</a>
 
-    <div class="flex items-center gap-6 mt-6">
-      <a href="https://www.instagram.com/weedsmusic" target="_blank" rel="noopener"
-         class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Instagram">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" rx="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
-        </svg>
-      </a>
-      <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
-         class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Bandcamp">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
-        </svg>
-      </a>
+      <div class="flex items-center gap-6 mt-6">
+        <a href="https://www.instagram.com/weedsmusic" target="_blank" rel="noopener"
+           class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61588720666652" target="_blank" rel="noopener"
+           class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Facebook">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M14 8h-1.5c-1.1 0-2 .9-2 2v2H9v2.2h1.5V21h2.4v-6.8H15l.3-2.2h-2.8v-1.7c0-.5.3-.8.8-.8H15z" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.youtube.com/channel/UCrYHmFp-sZzsJ7_Fq0NfO3A" target="_blank" rel="noopener"
+           class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on YouTube">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="4"/>
+            <path d="M10 9l6 3-6 3z" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
+           class="mobile-nav-link text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Bandcamp">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M0 18.75l7.437-13.5H24l-7.438 13.5z"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -459,15 +491,10 @@
     </div>
     <div class="max-w-[1180px] mx-auto px-6 pt-10 pb-14 md:pt-0 md:pb-20 w-full">
       <div class="max-w-2xl">
-        <p class="hero-eyebrow eyebrow mb-6">Irish Tradition &nbsp;&middot;&nbsp; Original Arrangements</p>
+        <p class="hero-eyebrow eyebrow mb-6">Traditional Music &nbsp;&middot;&nbsp; Sophisticated Arrangements</p>
 
-        <p class="hero-title font-heading text-cream text-4xl md:text-6xl leading-[1.08] mb-5">
-          Traditional tunes,<br>modern hands.
-        </p>
-
-        <p class="hero-sub text-base md:text-lg leading-relaxed mb-9 text-cream/80">
-          Fiddle, harp, and mandolin. Driving Irish jigs and reels, original
-          compositions, and arrangements that carry the tradition somewhere new.
+        <p class="hero-title font-heading text-cream text-4xl md:text-6xl leading-[1.08] mb-9">
+          A musical conversation that begins and ends in ancient Ireland.
         </p>
 
         <!-- Populated by site.js from the gig sheet; stays empty when nothing is booked. -->
@@ -487,11 +514,10 @@
       <div class="max-w-3xl">
         <p class="reveal eyebrow mb-5">Our Story</p>
         <h2 class="reveal font-heading text-cream text-3xl md:text-5xl leading-[1.15] mb-8">
-          A musical conversation that begins and ends in ancient Ireland.
+          The Weeds are a dynamic trio rooted in traditions from Ireland and beyond.
         </h2>
 
         <p class="reveal text-muted text-base leading-relaxed mb-5">
-          The Weeds are a dynamic trio rooted in traditions from Ireland and beyond.
           Hailing from the central coast of California, the Weeds consist of fiddler
           John Weed (Molly&rsquo;s Revenge / New World String Project) and sons, Tyler
           Weed (mandolin, Irish tenor banjo, guitar) and Evan Weed (Celtic harp,
@@ -524,7 +550,7 @@
       <div class="max-w-3xl mb-12">
         <p class="reveal eyebrow mb-5">Watch</p>
         <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2]">
-          The Weeds perform "Castle Kelly."
+          New Music Video: Castle Kelly!
         </h2>
       </div>
 
@@ -550,7 +576,13 @@
           <h2 class="reveal font-heading text-cream text-4xl md:text-5xl italic mb-3">Supernatural</h2>
           <p class="reveal text-muted text-sm tracking-wide mb-8">Released March 13, 2026 &nbsp;&middot;&nbsp; 10 tracks &nbsp;&middot;&nbsp; Mixed &amp; mastered by Jürgen Treyz</p>
           <p class="reveal text-cream text-base leading-relaxed max-w-lg mb-10">
-            Gathered from countless hours of playing, composing, long nights at fiddle camps, and years of performing together: the trio's favorite tune sets and original compositions, recorded at home in summer 2025.
+            In summer 2025, we gathered our favorite tune sets and original
+            compositions and recorded our first album at home. Supernatural is the
+            product of countless hours of playing, composing, long nights at fiddle
+            camps, and years of performing together. Tyler and Evan grew up on the
+            road, traveling with their father, John, to festivals, running feral
+            through concert halls, and clubs across the West Coast. This is a
+            snapshot of our music together.
           </p>
           <!-- Bandcamp embed -->
           <div class="reveal">
@@ -564,7 +596,7 @@
             </iframe>
           </div>
           <div class="mt-6 reveal">
-            <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-primary">Buy on Bandcamp</a>
+            <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener" class="btn-primary">Listen on Bandcamp</a>
           </div>
         </div>
 
@@ -640,7 +672,7 @@
     <div class="max-w-2xl mb-16">
       <p class="reveal eyebrow mb-5">The Trio</p>
       <h2 class="reveal font-heading text-cream text-3xl md:text-4xl leading-[1.2]">
-        Three players, one shared language.
+        A father and two sons.
       </h2>
     </div>
 
@@ -653,8 +685,9 @@
         <h3 class="font-heading text-cream text-2xl mb-1">John Weed</h3>
         <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Fiddle</p>
         <p class="text-muted text-sm leading-relaxed">
-          Thirty years across Irish, Scottish, Swedish, and Old-Time fiddle, with a
-          musical education that began in a long series of Irish sessions.
+          John Weed, fiddler for The Weeds, Molly&rsquo;s Revenge and New World
+          String Project, has spent the last 30 years immersed in various fiddle
+          styles.
         </p>
         <details class="bio">
           <summary aria-label="Read more about John Weed"><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
@@ -689,36 +722,43 @@
         <h3 class="font-heading text-cream text-2xl mb-1">Evan Weed</h3>
         <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Celtic Harp &middot; Piano &middot; Melodica</p>
         <p class="text-muted text-sm leading-relaxed">
-          A 2025 National YoungArts winner in composition and jazz piano, and the
-          third eighth grader in four decades to win a seat in the SFJazz High
-          School All Star Big Band.
+          Bridging traditional music and jazz, Evan Weed blends diverse styles
+          while honoring the traditions and exploring their possibilities.
         </p>
         <details class="bio">
           <summary aria-label="Read more about Evan Weed"><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
           <div class="bio__body text-muted text-sm leading-relaxed">
             <p>
-              Evan Weed is the youngest in the Weeds musical clan. Like Tyler, Evan
-              grew up on the road, accompanying his father&rsquo;s touring bands to
-              festivals, performing arts centers, house concerts, and many fiddle
-              camps. During the pandemic, Evan completely immersed himself in a
-              world of practice on piano, Celtic harp, jazz drumming, and Latin
+              Evan Weed is the youngest in the family. Like Tyler, Evan grew up on
+              the road, accompanying his father&rsquo;s touring bands to festivals,
+              performing arts centers, house concerts, and many fiddle camps.
+              During the pandemic, Evan completely immersed himself in a world of
+              musical exploration on piano, melodica, harp, drums, and Latin
               percussion.
             </p>
             <p>
-              In addition to playing harp and melodica in John Weed&rsquo;s Celtic
-              Teen Band &ldquo;The McMonarchs&rdquo;, Evan worked tirelessly on
-              piano. Evan won a position in the nationally ranked SFJazz High School
-              All Star Big Band, becoming only the third eighth grader in four
-              decades to be selected. Evan was later presented SFJazz Education
-              Award spring 2024, voted on by his peers and directors for superior
-              dedication, attitude, and musicianship.
+              Evan approaches backing of traditional music through a
+              jazz-influenced lens. While his backing remains rooted in the
+              traditions of Irish music, his sense of harmony, rhythm, and
+              interaction has been shaped by years of playing jazz. This gives his
+              backing a distinctive character, allowing him to support traditional
+              melodies while bringing a different kind of musical conversation to
+              the session.
             </p>
             <p>
-              Evan&rsquo;s original composition, &ldquo;Ask The Professor&rdquo;,
-              was recently featured in the SFJazz winter concert after Evan arranged
-              and orchestrated for the 19 piece big-band. Evan recently became a
-              2025 National Young Arts Winner in the categories of composition and
-              jazz piano.
+              For the past four years, he has been a member of the nationally
+              ranked SFJAZZ High School All-Stars Big Band. During this time, the
+              ensemble performed two of his original big band compositions and one
+              of his big band arrangements, which earned DownBeat awards for
+              Original Composition Large Ensemble in 2025 and 2026, and for Jazz
+              Arrangement in 2026.
+            </p>
+            <p>
+              In 2025, Evan received the Outstanding Honors Soloist Award at the
+              Las Vegas Essentially Ellington Jazz Festival and was selected as the
+              pianist for the MJF Next Generation Jazz Orchestra, a national big
+              band. He was also a national YoungArts winner in both 2025 and 2026
+              in the categories of Jazz Composition and Jazz Piano.
             </p>
           </div>
         </details>
@@ -731,34 +771,34 @@
         <h3 class="font-heading text-cream text-2xl mb-1">Tyler Weed</h3>
         <p class="text-accent text-[11px] tracking-[2px] uppercase font-body mb-3">Mandolin &middot; Tenor Banjo &middot; Guitar</p>
         <p class="text-muted text-sm leading-relaxed">
-          Equally at home in old-world fiddle styles and swing accompaniment, with
-          a tenor banjo style built on ornate, percussive triplets over a driving
-          groove.
+          Tyler Weed&rsquo;s sense of tone, rhythm, and phrasing is deeply rooted
+          in the Irish tradition.
         </p>
         <details class="bio">
           <summary aria-label="Read more about Tyler Weed"><span class="bio__more">Read more</span><span class="bio__less">Read less</span></summary>
           <div class="bio__body text-muted text-sm leading-relaxed">
             <p>
-              Tyler Weed was raised in a musical family. His journey began on guitar
-              which quickly led to earning money backing his father on fiddle. He
-              then discovered flat-picking melodies while also developing a passion
-              for jazz. This allowed him to be equally comfortable playing in the
-              old-world fiddle styles as well as using swing-accompaniment on Irish
-              melodies. World Strides Heritage Festival presented Tyler with
-              first-place Maestro Solo Guitar award in Anaheim, Ca. 2022.
+              In his youth, he had frequent exposure to traditional music as he
+              accompanied his father&rsquo;s band, Molly&rsquo;s Revenge, to many
+              festivals, venues, and sessions. Today, he has become accomplished on
+              mandolin, tenor banjo, and guitar. Heavily influenced by Bay Area
+              mandolin great Marla Fibish, Tyler&rsquo;s playing style can be
+              characterized by percussive triplet ornamentations with a driving,
+              yet hypnotic groove. While he started with Irish music, Tyler&rsquo;s
+              passion and experience extends into other diverse genres including
+              Scottish, American Old Time, Jazz, Funk, Rock, and more. Drawing on
+              this wealth of musical knowledge, Tyler has developed a creative and
+              distinct composition style which is prominently featured on The
+              Weeds album, &ldquo;Supernatural&rdquo;.
             </p>
             <p>
-              Heavily influenced by Bay Area mandolin great Marla Fibish, Tyler
-              developed nuanced traditional Irish tunes on mandolin &mdash; picking
-              patterns for the different dance tunes, tone projection, and styling,
-              which continues in his playing today. Tyler represented the next
-              generation of mandolin players at his performance at 2023 San
-              Francisco Instrumental Festival of Mandolins.
-            </p>
-            <p>
-              He has since journeyed into the world of tenor banjo. His banjo style
-              can be characterized by ornate, percussive triplet stylings with a
-              driving, yet hypnotic groove.
+              Tyler received First-Place Maestro Soloist Award for jazz guitar at
+              the 2022 Anaheim World Strides Heritage Festival. He was the featured
+              &lsquo;Next Generation&rsquo; performer at the 2023 San Francisco
+              International Festival of Mandolins. Tyler is a frequent instructor
+              at various music camps, including Big Sur Fiddle Camp, Community
+              Music School Teen Camp, Wallowa Fiddle Tunes, and Weeds Winter Jam
+              Camp.
             </p>
           </div>
         </details>
@@ -806,8 +846,8 @@
             Hear about shows first.
           </h2>
           <p class="reveal text-muted text-sm leading-relaxed mb-8">
-            Tour dates, new recordings, and the occasional tune. No more than a few
-            times a year.
+            Sign up to our mailing list to find out when The Weeds are playing in
+            your area!
           </p>
 
           <form id="mailing-list-form" name="mailing-list" method="POST"
@@ -819,6 +859,9 @@
             <label for="ml-email" class="sr-only">Email address</label>
             <input id="ml-email" class="field" type="email" name="email" required
                    autocomplete="email" placeholder="Email address">
+            <label for="ml-zip" class="sr-only">ZIP code</label>
+            <input id="ml-zip" class="field" style="flex:0 1 140px" type="text" name="zip" inputmode="numeric"
+                   autocomplete="postal-code" placeholder="ZIP code" maxlength="10">
             <button type="submit" class="btn-primary">Sign Up</button>
           </form>
           <p id="mailing-list-status" role="status" aria-live="polite" class="text-sm mt-4"></p>
@@ -830,8 +873,8 @@
             Bring The Weeds to your stage.
           </h2>
           <p class="reveal text-muted text-sm leading-relaxed mb-8">
-            Concerts, festivals, house concerts, and workshops. Reach out and the
-            band will get back to you.
+            We play Festivals, Concerts, Workshops, and other events. Reach out and
+            the band will get back to you!
           </p>
 
           <div class="reveal flex flex-col gap-6">
@@ -844,6 +887,20 @@
                   <rect x="2" y="2" width="20" height="20" rx="5"/>
                   <circle cx="12" cy="12" r="4"/>
                   <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61588720666652" target="_blank" rel="noopener"
+                 class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on Facebook">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M14 8h-1.5c-1.1 0-2 .9-2 2v2H9v2.2h1.5V21h2.4v-6.8H15l.3-2.2h-2.8v-1.7c0-.5.3-.8.8-.8H15z" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+              <a href="https://www.youtube.com/channel/UCrYHmFp-sZzsJ7_Fq0NfO3A" target="_blank" rel="noopener"
+                 class="text-accent/75 hover:text-accent transition-colors" aria-label="The Weeds on YouTube">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <rect x="2" y="5" width="20" height="14" rx="4"/>
+                  <path d="M10 9l6 3-6 3z" fill="currentColor" stroke="none"/>
                 </svg>
               </a>
               <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
@@ -866,7 +923,7 @@
   <footer class="bg-ground border-t border-hairline py-8">
     <div class="max-w-[1180px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-muted">
       <span class="font-heading italic text-sm text-cream/70">The Weeds</span>
-      <span>&copy; 2026 The Weeds</span>
+      <span>&copy; <span id="copyright-year">2026</span> The Weeds</span>
       <a href="https://weedsmusic.bandcamp.com/album/supernatural" target="_blank" rel="noopener"
          class="hover:text-accent transition-colors">Bandcamp</a>
     </div>
