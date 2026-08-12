@@ -82,11 +82,14 @@ test('nextShow returns null for an empty sheet', () => {
   assert.equal(nextShow([], new Date(2026, 7, 14)), null);
 });
 
-test('hasTicketLink accepts http and https only', () => {
+test('hasTicketLink accepts http, https, and mailto only', () => {
   assert.equal(hasTicketLink({ link: 'https://tickets.example/x' }), true);
   assert.equal(hasTicketLink({ link: 'http://tickets.example/x' }), true);
+  assert.equal(hasTicketLink({ link: 'mailto:reserve@example.com' }), true);
   assert.equal(hasTicketLink({ link: 'javascript:alert(1)' }), false);
   assert.equal(hasTicketLink({ link: 'tickets.example/x' }), false);
+  assert.equal(hasTicketLink({ link: 'https:foo' }), false);
+  assert.equal(hasTicketLink({ link: 'http:javascript:alert(1)' }), false);
   assert.equal(hasTicketLink({ link: '' }), false);
   assert.equal(hasTicketLink({}), false);
 });

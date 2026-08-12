@@ -63,7 +63,7 @@ export function nextShow(rows, today) {
   return partitionShows(rows, today).upcoming[0] ?? null;
 }
 
-/** Only http(s) links are rendered, so a sheet edit cannot inject a scheme. */
+/** Only http(s)/mailto links are rendered, so a sheet edit cannot inject a scheme. */
 export function hasTicketLink(row) {
-  return /^https?:\/\//i.test(row?.link || '');
+  return /^(?:https?:\/\/|mailto:)/i.test(row?.link || '');
 }
