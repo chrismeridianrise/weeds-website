@@ -88,6 +88,7 @@ const formatShowDate = d => d.toLocaleDateString('en-US', SHOWS_FORMAT);
 
 /** target=_blank makes sense for a ticket page but just leaves a stray blank tab behind a mail client. */
 const ticketLinkAttrs = link => /^mailto:/i.test(link) ? '' : 'target="_blank" rel="noopener"';
+const ticketLinkLabel = link => /^mailto:/i.test(link) ? 'Reservations' : 'Tickets';
 
 function showRow(r) {
   const where = r.city
@@ -101,7 +102,7 @@ function showRow(r) {
         ${r.notes ? `<p class="text-accent text-xs uppercase tracking-[1px] mt-1">${escapeHtml(r.notes)}</p>` : ''}
       </div>
       ${hasTicketLink(r)
-        ? `<a href="${escapeHtml(r.link)}" ${ticketLinkAttrs(r.link)} class="btn-primary shrink-0">Tickets</a>`
+        ? `<a href="${escapeHtml(r.link)}" ${ticketLinkAttrs(r.link)} class="btn-primary shrink-0">${ticketLinkLabel(r.link)}</a>`
         : ''}
     </div>`;
 }
@@ -187,7 +188,7 @@ function renderNextShow(rows) {
       <span class="next-show__label">Next Show</span>
       <span class="next-show__detail">${formatShowDate(show.date)} &middot; ${where}</span>
       ${hasTicketLink(show)
-        ? `<a href="${escapeHtml(show.link)}" ${ticketLinkAttrs(show.link)} class="btn-primary">Tickets</a>`
+        ? `<a href="${escapeHtml(show.link)}" ${ticketLinkAttrs(show.link)} class="btn-primary">${ticketLinkLabel(show.link)}</a>`
         : ''}
     </div>`;
 }
